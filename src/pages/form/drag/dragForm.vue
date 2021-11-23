@@ -1,0 +1,113 @@
+<script>
+import RenderForm from './renderForm'
+import MenuList from './menuList.vue'
+import ToolBox from './toolBox.vue'
+import eventBus from './eventBus'
+export default {
+  name: 'drag-form',
+  components: {
+    RenderForm,
+    MenuList,
+    ToolBox
+  },
+  data() {
+    return {
+      setting: {
+        mode: 'inline-horizontal',
+        renderType: 'EDIT', // PREVIEW | EDIT
+        config: {}
+      }
+    }
+  },
+  mounted() {
+    eventBus.$on('updata:config', (payload) => {
+      this.setting.config = payload
+    })
+    eventBus.$on('updata:renderType', (payload) => {
+      this.setting.renderType = payload
+    });
+    eventBus.$on('clone', (payload) => {
+      const ref = this.$refs.RenderForm;
+      ref && ref.modelRender.push(payload);
+    })
+  },
+  render() {
+    return <section class="drag-page">
+      <div class="left-wrap">
+        <MenuList setting={this.setting} />
+      </div>
+      <div class="right-wrap">
+        <ToolBox setting={this.setting} />
+        <RenderForm ref="RenderForm" setting={this.setting} style="padding: 10px 0 0;" />
+      </div>
+    </section>
+  }
+}
+</script>
+
+<style lang="less" scoped>
+  .drag-page{
+    background: #fff;
+    height: calc(100vh - 270px);
+    display: flex;
+    .left-wrap{
+      height: 100%;
+      width: 200px;
+    }
+    .right-wrap{
+      flex: 1;
+      height: 100%;
+      ::v-deep {
+        .container{
+          padding: 0 10px 200px;
+        }
+      }
+    }
+  }
+  ::v-deep .custom-form{
+    &.render-form{
+      .drag-item{
+        margin: 5px;
+      }
+    }
+    &.drag-form{
+      .drag-item{
+        border-radius: 8px;
+        padding: 12px;
+        position: relative;
+        cursor: pointer;
+        &.drag-active{
+          background: #eff3fd!important;
+        }
+        &.chosen-item{
+          display: inline-block;
+        }
+        &:hover{
+          background: #fafafb;
+        }
+        .ant-form-item-control{
+          pointer-events: none;
+        }
+        .drag-item-tool{
+          display: inline-block;
+          padding: 2px 0;
+          position: absolute;
+          top: -5px;
+          right: 10px;
+          border-radius: 10px;
+          background: #fff;
+          .icon{
+            width: 36px;
+          }
+        }
+      }
+    }
+    .ant-form-item{
+      margin: 0px!important;
+      padding: 0px!important;
+    }
+    .inline-block{
+      display: inline-block;
+    }
+  }
+</style>
