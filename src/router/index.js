@@ -1,31 +1,55 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import {formatRoutes} from '@/utils/routerUtil'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Workspace from "../views/Workspace.vue";
 
-Vue.use(Router)
+Vue.use(VueRouter);
 
-// 不需要登录拦截的路由配置
-const loginIgnore = {
-  names: ['404', '403'],      //根据路由名称匹配
-  paths: ['/login'],   //根据路由fullPath匹配
-  /**
-   * 判断路由是否包含在该配置中
-   * @param route vue-router 的 route 对象
-   * @returns {boolean}
-   */
-  includes(route) {
-    return this.names.includes(route.name) || this.paths.includes(route.path)
-  }
-}
+export const routes = [
+  {
+    path: "/",
+    name: "workspace",
+    meta: {
+      icon: "appstore",
+      name: "工作台",
+    },
+    component: Workspace,
+  },
+  {
+    path: "/fanyi",
+    name: "fanyi",
+    meta: {
+      icon: "global",
+      name: "翻译",
+    },
+    component: () =>
+      import(/* webpackChunkName: "fanyi" */ "../views/Fanyi/index.vue"),
+  },
+  {
+    path: "/form",
+    name: "form",
+    meta: {
+      icon: "api",
+      name: "表单",
+    },
+    component: () =>
+      import(/* webpackChunkName: "form" */ "../views/Form/index.vue"),
+  },
+  {
+    path: "/about",
+    name: "about",
+    meta: {
+      icon: "like",
+      name: "关于",
+    },
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+  },
+];
 
-/**
- * 初始化路由实例
- * @param isAsync 是否异步路由模式
- * @returns {VueRouter}
- */
-function initRouter(isAsync) {
-  const options = isAsync ? require('./async/config.async').default : require('./config').default
-  formatRoutes(options.routes)
-  return new Router(options)
-}
-export {loginIgnore, initRouter}
+const router = new VueRouter({
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes,
+});
+
+export default router;
