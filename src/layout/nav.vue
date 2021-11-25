@@ -30,7 +30,7 @@ export default {
           class="nav"
           theme="light"
           mode="inline"
-          selectedKeys={this.selectedKeys}
+          vModel={this.selectedKeys}
           on-click={this.handleClick}
         >
           {routes.map((route) => (

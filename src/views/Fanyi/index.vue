@@ -2,24 +2,24 @@
 import axios from "axios";
 import { js_beautify } from "js-beautify";
 import Clipboard from "clipboard";
+import _get from "lodash/get";
+import { FANYI } from "./constant";
 export default {
+  name: "fanyi",
   data() {
     return {
+      from: "auto",
+      to: "cht",
       content: "",
       rContent: "",
+      loading: {
+        seatch: false,
+      },
     };
   },
-  mounted() {},
   methods: {
-    // 翻译
-    async enter() {
-      this.rContent = "";
-      const content = this.content;
-      const list = content.split(/[(\r\n)\r\n]+/);
-      const res = await axios.get(
-        `/fontconvert/convert?appkey=b61baecb78ee7cdf&content=${content}&type=2t`
-      );
-      let rContent = res.data.result.rcontent;
+    // 生成i8n对象
+    buildI18n(list, rContent) {
       let index = 0;
       const resultList = [];
       list.forEach((item) => {
@@ -47,20 +47,54 @@ export default {
         { indent_size: 2 }
       );
     },
+    // 翻译
+    async enter() {
+      this.rContent = "";
+      const sourceList = this.content.split(/[(\r\n)\r\n]+/);
+      this.loading.seatch = true;
+      const res = await axios.post(`/fanyi`, {
+        from: this.from,
+        to: this.to,
+        q: this.content,
+        token: "UAeGrSjsrhL0vIJV", // https://admin.alapi.cn/dashboard/workplace中获取
+      });
+      this.loading.seatch = false;
+      if (_get(res, "data.code") !== 200) {
+        this.$message.warn(_get(res, "data.msg"));
+        return;
+      }
+      let dst = _get(res, "data.data.dst", "");
+      this.buildI18n(sourceList, dst);
+    },
     // 复制
     copy() {
       let clipboard = new Clipboard("#copyBtn");
       clipboard.on("success", () => {
-        this.$message.warn(`已复制`);
+        this.$message.success(`已复制`);
         clipboard.destroy();
       });
     },
   },
   render() {
+    const renderSelect = (modelKey, options = []) => (
+      <a-select vModel={this[modelKey]} style="width: 150px;">
+        {options.map((option) => (
+          <a-select-option key={option.value} value={option.value}>
+            {option.label}
+          </a-select-option>
+        ))}
+      </a-select>
+    );
     return (
       <div class="fanyi-page">
         <div class="tool-box">
+          <span>
+            <strong>i18n生成工具</strong>(翻译接口存在一定的失败率)
+          </span>
           <a-space>
+            {renderSelect("from", FANYI)}
+            <a-icon type="swap" />
+            {renderSelect("to", FANYI)}
             <a-button
               type="primary"
               id="copyBtn"
@@ -69,14 +103,18 @@ export default {
             >
               复制
             </a-button>
-            <a-button type="primary" on-click={this.enter}>
+            <a-button
+              type="primary"
+              loading={this.loading.seatch}
+              on-click={this.enter}
+            >
               翻译
             </a-button>
           </a-space>
         </div>
         <div class="container">
           <a-input class="text-area" type="textarea" vModel={this.content} />
-          <pre class="result-box">{this.rContent}</pre>
+          <a-input class="result-box" type="textarea" vModel={this.rContent} />
         </div>
       </div>
     );
@@ -94,7 +132,8 @@ export default {
   .tool-box {
     margin-bottom: 8px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
   }
   .container {
     flex: 1;
@@ -105,8 +144,6 @@ export default {
     .result-box {
       flex: 1;
       margin: 0 0 0 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
     }
   }
 }
