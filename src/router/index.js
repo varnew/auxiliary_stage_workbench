@@ -15,8 +15,8 @@ export const routes = [
     component: Workspace,
   },
   {
-    path: "/fanyi",
-    name: "fanyi",
+    path: "/translate",
+    name: "translate",
     meta: {
       icon: "global",
       name: "翻译",
