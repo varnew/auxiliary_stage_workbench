@@ -17,4 +17,9 @@ RUN cd /
 RUN mkdir data_nginx
 RUN mkdir /data_nginx/auxiliary_stage_workbench
 COPY ./ /data_nginx/auxiliary_stage_workbench
+
+# 配置环境变量
+ENV PROXY_PASS https://v2.alapi.cn/api
+ENV PROXY_FANYI https://api.jisuapi.com
+
 EXPOSE 8082

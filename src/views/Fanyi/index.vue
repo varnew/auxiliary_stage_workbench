@@ -89,7 +89,15 @@ export default {
       <div class="fanyi-page">
         <div class="tool-box">
           <span>
-            <strong>i18n生成工具</strong>(翻译接口存在一定的失败率)
+            <strong>i18n生成工具</strong>
+            (翻译接口存在一定的失败率)
+            <a-button
+              type="link"
+              href="https://kazupon.github.io/vue-i18n/zh/guide/component.html#组件的共享语言环境消息"
+              target="_brank"
+            >
+              帮助
+            </a-button>
           </span>
           <a-space>
             {renderSelect("from", FANYI)}
