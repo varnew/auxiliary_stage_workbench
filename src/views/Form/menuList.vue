@@ -1,6 +1,6 @@
 <script>
 import draggable from "vuedraggable";
-import eventBus from './eventBus';
+import eventBus from "./eventBus";
 export default {
   name: "menu-list",
   components: { draggable },
@@ -62,8 +62,8 @@ export default {
               render: function () {
                 return <a-button type="primary">按钮</a-button>;
               },
-            }
-          ]
+            },
+          ],
         },
         {
           name: "高级表单",
@@ -74,11 +74,19 @@ export default {
               label: "",
               prop: "input",
               render: function () {
-                return <a-input-group compact>
-                  <a-input style="width: 30%" vModel={this.form.inputGroup1} />
-                  <a-input style="width: 70%" vModel={this.form.inputGroup2} />
-                </a-input-group>
-              }
+                return (
+                  <a-input-group compact>
+                    <a-input
+                      style="width: 30%"
+                      vModel={this.form.inputGroup1}
+                    />
+                    <a-input
+                      style="width: 70%"
+                      vModel={this.form.inputGroup2}
+                    />
+                  </a-input-group>
+                );
+              },
             },
             {
               dragName: "选择-输入",
@@ -86,41 +94,46 @@ export default {
               label: "",
               prop: "input",
               render: function () {
-                return <a-input-group compact>
-                  <a-select vModel={this.form.inputGroup3}>
-                    {[].map((option) => (
-                      <a-select-option value={option.value}>
-                        {option.name}
-                      </a-select-option>
-                    ))}
-                  </a-select>
-                  <a-input style="width: 50%" vModel={this.form.inputGroup4} />
-                </a-input-group>
-              }
-            }
-          ]
-        }
-      ]
-    }
+                return (
+                  <a-input-group compact>
+                    <a-select vModel={this.form.inputGroup3}>
+                      {[].map((option) => (
+                        <a-select-option value={option.value}>
+                          {option.name}
+                        </a-select-option>
+                      ))}
+                    </a-select>
+                    <a-input
+                      style="width: 50%"
+                      vModel={this.form.inputGroup4}
+                    />
+                  </a-input-group>
+                );
+              },
+            },
+          ],
+        },
+      ],
+    };
   },
   computed: {
     itemList() {
       let list = [];
-      this.sourceList.forEach(item =>{
-        list = [...list, ...item.list]
+      this.sourceList.forEach((item) => {
+        list = [...list, ...item.list];
       });
       return list;
-    }
+    },
   },
   methods: {
     // 可用于修改拽宅携带的数据
     cloneDog(payload) {
-      return { ...payload, uuid: Math.random()};
+      return { ...payload, uuid: Math.random() };
     },
     // 点击添加数据
     handleItemClick(item) {
-      eventBus.$emit('clone', { ...item, uuid: Math.random() })
-    }
+      eventBus.$emit("clone", { ...item, uuid: Math.random() });
+    },
   },
   render() {
     return (
@@ -136,7 +149,14 @@ export default {
                 clone={this.cloneDog}
                 sort={false}
               >
-                { group.list.map(item => <div class="menu-item" on-click={ () => this.handleItemClick(item) }>{item.dragName}</div>) }
+                {group.list.map((item) => (
+                  <div
+                    class="menu-item"
+                    on-click={() => this.handleItemClick(item)}
+                  >
+                    {item.dragName}
+                  </div>
+                ))}
               </draggable>
             </div>
           );
@@ -166,7 +186,7 @@ export default {
         padding: 6px 2px;
         margin: 6px 0px;
         cursor: move;
-        &:hover{
+        &:hover {
           background-image: url(https://file.qingflow.com/assets/widget/cover.png);
           background-size: 100%;
         }

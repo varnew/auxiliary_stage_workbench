@@ -1,13 +1,13 @@
-import { html_beautify } from 'js-beautify'
+import { html_beautify } from "js-beautify";
 export const FORM_COMPONENT = (formItems = []) => {
   const buildComputed = (formItems) => {
     return `computed: {
       modelRender() {
         return ${JSON.stringify(formItems)}
       }
-    },`
-  }
-let temp =  `
+    },`;
+  };
+  let temp = `
 <script>
 import UseForm from "./useForm";
 export default {
@@ -52,6 +52,6 @@ export default {
 
 <style lang="less" scoped>
 </style>
-`
-return html_beautify(temp, { indent_size: 2 });
-}
+`;
+  return html_beautify(temp, { indent_size: 2 });
+};

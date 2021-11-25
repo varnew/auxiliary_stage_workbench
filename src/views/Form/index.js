@@ -1,2 +1,2 @@
-import DragForm from './dragForm'
-export default DragForm
+import DragForm from "./dragForm";
+export default DragForm;
