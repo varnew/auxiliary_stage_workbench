@@ -52,12 +52,15 @@ export default {
       this.rContent = "";
       const sourceList = this.content.split(/[(\r\n)\r\n]+/);
       this.loading.seatch = true;
-      const res = await axios.post(`/api/fanyi`, {
-        from: this.from,
-        to: this.to,
-        q: this.content,
-        token: "UAeGrSjsrhL0vIJV", // https://admin.alapi.cn/dashboard/workplace中获取
-      });
+      const res = await axios.get(
+        `/api/fanyi?from=${this.form}&to=${this.to}&q=${this.content}&token=${this.token}`
+      );
+      // const res = await axios.post(`/api/fanyi`, {
+      //   from: this.from,
+      //   to: this.to,
+      //   q: this.content,
+      //   token: "UAeGrSjsrhL0vIJV", // https://admin.alapi.cn/dashboard/workplace中获取
+      // });
       this.loading.seatch = false;
       if (_get(res, "data.code") !== 200) {
         this.$message.warn(_get(res, "data.msg"));
