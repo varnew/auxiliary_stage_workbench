@@ -8,6 +8,7 @@ export default {
   name: "fanyi",
   data() {
     return {
+      token: "UAeGrSjsrhL0vIJV",
       from: "auto",
       to: "cht",
       content: "",
@@ -53,7 +54,7 @@ export default {
       const sourceList = this.content.split(/[(\r\n)\r\n]+/);
       this.loading.seatch = true;
       const res = await axios.get(
-        `/api/fanyi?from=${this.form}&to=${this.to}&q=${this.content}&token=${this.token}`
+        `/api/fanyi?from=${this.from}&to=${this.to}&q=${this.content}&token=${this.token}`
       );
       // const res = await axios.post(`/api/fanyi`, {
       //   from: this.from,
@@ -103,6 +104,7 @@ export default {
             </a-button>
           </span>
           <a-space>
+            <a-input vModel={this.token} style="width: 166px;" allowClear />
             {renderSelect("from", FANYI)}
             <a-icon type="swap" />
             {renderSelect("to", FANYI)}
