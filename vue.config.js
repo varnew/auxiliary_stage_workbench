@@ -19,7 +19,7 @@ module.exports = {
         //   }
       },
       "/fanyi": {
-        target: "https://v2.alapi.cn/api",
+        target: "https://v2.alapi.cn",
         changeOrigin: true,
         //   pathRewrite: {
         //     '^/api': ''

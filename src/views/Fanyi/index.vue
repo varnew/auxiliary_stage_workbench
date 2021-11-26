@@ -52,7 +52,7 @@ export default {
       this.rContent = "";
       const sourceList = this.content.split(/[(\r\n)\r\n]+/);
       this.loading.seatch = true;
-      const res = await axios.post(`/fanyi`, {
+      const res = await axios.post(`/api/fanyi`, {
         from: this.from,
         to: this.to,
         q: this.content,
