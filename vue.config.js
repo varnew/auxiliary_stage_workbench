@@ -57,7 +57,7 @@ module.exports = {
     },
   },
   configureWebpack: (config) => {
-    config.entry.app = ["babel-polyfill", "whatwg-fetch", "./src/main.js"];
+    config.entry.app = ["babel-polyfill", "./src/main.js"];
     config.performance = {
       hints: false,
     };
@@ -111,7 +111,7 @@ module.exports = {
       },
     },
   },
-  publicPath: "./",
+  // publicPath: "./",
   outputDir: "dist",
   assetsDir: "static",
   productionSourceMap: false,
