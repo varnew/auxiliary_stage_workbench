@@ -1,120 +1,13 @@
 <script>
 import draggable from "vuedraggable";
 import eventBus from "./eventBus";
+import renders from "./mixins/renders";
 export default {
   name: "menu-list",
   components: { draggable },
+  mixins: [renders],
   data() {
-    return {
-      sourceList: [
-        {
-          name: "基础表单",
-          list: [
-            {
-              dragName: "输入框",
-              id: "0000",
-              label: "输入框",
-              prop: "input",
-              render: function () {
-                return <a-input vModel={this.form.input} />;
-              },
-            },
-            {
-              dragName: "选择框",
-              id: "0001",
-              label: "选择框",
-              prop: "select",
-              render: function () {
-                return (
-                  <a-select vModel={this.form.select}>
-                    {[].map((option) => (
-                      <a-select-option value={option.value}>
-                        {option.name}
-                      </a-select-option>
-                    ))}
-                  </a-select>
-                );
-              },
-            },
-            {
-              dragName: "时间",
-              id: "0002",
-              label: "时间",
-              prop: "name",
-              render: function () {
-                return <a-date-picker vModel={this.form.time} type="date" />;
-              },
-            },
-            {
-              dragName: "多行文本",
-              id: "0003",
-              label: "多行文本",
-              prop: "textarea",
-              render: function () {
-                return <a-input vModel={this.form.textarea} type="textarea" />;
-              },
-            },
-            {
-              dragName: "按钮",
-              id: "0004",
-              label: "",
-              prop: "",
-              render: function () {
-                return <a-button type="primary">按钮</a-button>;
-              },
-            },
-          ],
-        },
-        {
-          name: "高级表单",
-          list: [
-            {
-              dragName: "输入-输入",
-              id: "0100",
-              label: "",
-              prop: "input",
-              render: function () {
-                return (
-                  <a-input-group compact>
-                    <a-input
-                      style="width: 30%"
-                      vModel={this.form.inputGroup1}
-                    />
-                    <a-input
-                      style="width: 70%"
-                      vModel={this.form.inputGroup2}
-                    />
-                  </a-input-group>
-                );
-              },
-            },
-            {
-              dragName: "选择-输入",
-              id: "0101",
-              label: "",
-              prop: "input",
-              render: function () {
-                return (
-                  <a-input-group compact>
-                    <a-select vModel={this.form.inputGroup3}>
-                      {[].map((option) => (
-                        <a-select-option value={option.value}>
-                          {option.name}
-                        </a-select-option>
-                      ))}
-                    </a-select>
-                    <a-input
-                      style="width: 50%"
-                      vModel={this.form.inputGroup4}
-                    />
-                  </a-input-group>
-                );
-              },
-            },
-          ],
-        },
-      ],
-    };
+    return {};
   },
   computed: {
     itemList() {
@@ -154,7 +47,7 @@ export default {
                     class="menu-item"
                     on-click={() => this.handleItemClick(item)}
                   >
-                    {item.dragName}
+                    {group.type === "render" ? item.render() : item.dragName}
                   </div>
                 ))}
               </draggable>
@@ -171,7 +64,6 @@ export default {
 .menu-list {
   height: 100%;
   padding: 10px;
-  box-shadow: 0 4px 10px 0 rgba(12, 31, 80, 8%);
   .menu-group {
     .menu-title {
       font-weight: bold;
@@ -181,14 +73,15 @@ export default {
       display: flex;
       flex-wrap: wrap;
       .menu-item {
-        width: 50%;
+        width: calc(50% - 10px);
         text-align: center;
         padding: 6px 2px;
         margin: 6px 0px;
         cursor: move;
         &:hover {
           background-image: url(https://file.qingflow.com/assets/widget/cover.png);
-          background-size: 100%;
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
         }
       }
     }

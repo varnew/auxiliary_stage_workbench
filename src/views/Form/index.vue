@@ -3,12 +3,14 @@ import RenderForm from "./renderForm";
 import MenuList from "./menuList.vue";
 import ToolBox from "./toolBox.vue";
 import eventBus from "./eventBus";
+import Scrollbar from "@/components/Scrollbar";
 export default {
   name: "drag-form",
   components: {
     RenderForm,
     MenuList,
     ToolBox,
+    Scrollbar,
   },
   data() {
     return {
@@ -34,17 +36,17 @@ export default {
   render() {
     return (
       <section class="drag-page">
-        <div class="left-wrap">
+        <Scrollbar class="left-wrap">
           <MenuList setting={this.setting} />
-        </div>
-        <div class="right-wrap">
+        </Scrollbar>
+        <Scrollbar class="right-wrap">
           <ToolBox setting={this.setting} />
           <RenderForm
             ref="RenderForm"
             setting={this.setting}
             style="padding: 10px 0 0;"
           />
-        </div>
+        </Scrollbar>
       </section>
     );
   },
@@ -59,7 +61,8 @@ export default {
   border-radius: 4px;
   .left-wrap {
     height: 100%;
-    width: 200px;
+    width: 220px;
+    box-shadow: 0 4px 10px 0 rgba(12, 31, 80, 8%);
   }
   .right-wrap {
     flex: 1;

@@ -1,8 +1,9 @@
 <script>
 import NavBar from "@/layout/nav";
+import HeaderBar from "@/layout/header";
 export default {
   name: "base-layout",
-  components: { NavBar },
+  components: { NavBar, HeaderBar },
   data() {
     return {
       collapsed: true,
@@ -22,10 +23,9 @@ export default {
         </a-layout-sider>
         <a-layout>
           <a-layout-header class="header">
-            <a-icon
-              class="trigger"
-              type={collapsed ? "menu-unfold" : "menu-fold"}
-              on-click={() => (this.collapsed = !collapsed)}
+            <header-bar
+              collapsed={collapsed}
+              on-collapsed={(e) => (this.collapsed = e)}
             />
           </a-layout-header>
           <a-layout-content class="content">
@@ -51,13 +51,7 @@ export default {
   height: 100%;
   .header {
     height: 50px;
-    line-height: 50px;
     padding: 0px;
-    background: #fff;
-    .trigger {
-      color: #379cff;
-      margin-left: 10px;
-    }
   }
   .content {
     padding: 6px;

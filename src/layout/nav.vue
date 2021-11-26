@@ -10,12 +10,12 @@ export default {
       selectedKeys: [],
     };
   },
-  mounted() {
-    const timer = setTimeout(() => {
-      const path = this.$route.path;
-      this.selectedKeys = [path];
-      clearTimeout(timer);
-    }, 500);
+  watch: {
+    "$route.path": {
+      handler(path) {
+        this.selectedKeys = [path];
+      },
+    },
   },
   methods: {
     handleClick({ key }) {
