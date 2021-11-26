@@ -1,5 +1,4 @@
 <script>
-import axios from "axios";
 import { js_beautify } from "js-beautify";
 import Clipboard from "clipboard";
 import _get from "lodash/get";
@@ -8,7 +7,7 @@ export default {
   name: "fanyi",
   data() {
     return {
-      token: "UAeGrSjsrhL0vIJV",
+      token: "UAeGrSjsrhL0vIJV", // https://admin.alapi.cn/dashboard/workplace中获取
       from: "auto",
       to: "cht",
       content: "",
@@ -53,18 +52,14 @@ export default {
       this.rContent = "";
       const sourceList = this.content.split(/[(\r\n)\r\n]+/);
       this.loading.seatch = true;
-      const res = await axios.get(
-        `https://v2.alapi.cn/api/fanyi?from=${this.from}&to=${this.to}&q=${this.content}&token=${this.token}`
-      );
-      // const res = await axios.post(`/api/fanyi`, {
-      //   from: this.from,
-      //   to: this.to,
-      //   q: this.content,
-      //   token: "UAeGrSjsrhL0vIJV", // https://admin.alapi.cn/dashboard/workplace中获取
-      // });
+      const res = await this.$api.fanyi({
+        from: this.from,
+        to: this.to,
+        q: this.content,
+        token: this.token,
+      });
       this.loading.seatch = false;
       if (_get(res, "data.code") !== 200) {
-        this.$message.warn(_get(res, "data.msg"));
         return;
       }
       let dst = _get(res, "data.data.dst", "");
