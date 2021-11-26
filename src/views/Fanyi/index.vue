@@ -54,7 +54,10 @@ export default {
       const sourceList = this.content.split(/[(\r\n)\r\n]+/);
       this.loading.seatch = true;
       const res = await axios.get(
-        `/api/fanyi?from=${this.from}&to=${this.to}&q=${this.content}&token=${this.token}`
+        `/api/fanyi?from=${this.from}&to=${this.to}&q=${this.content}&token=${this.token}`,
+        {
+          baseURL: "",
+        }
       );
       // const res = await axios.post(`/api/fanyi`, {
       //   from: this.from,
