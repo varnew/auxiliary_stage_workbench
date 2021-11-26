@@ -19,7 +19,7 @@ RUN mkdir /data_nginx/auxiliary_stage_workbench
 COPY ./ /data_nginx/auxiliary_stage_workbench
 
 # 配置环境变量
-ENV PROXY_FANYI https://v2.alapi.cn
+ENV PROXY_FANYI https://v2.alapi.cn/api/fanyi
 ENV PROXY_PASS https://api.jisuapi.com
 
 EXPOSE 8082
