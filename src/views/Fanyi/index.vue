@@ -56,7 +56,7 @@ export default {
       const res = await axios.get(
         `/api/fanyi?from=${this.from}&to=${this.to}&q=${this.content}&token=${this.token}`,
         {
-          baseURL: "",
+          baseURL: "/",
         }
       );
       // const res = await axios.post(`/api/fanyi`, {
