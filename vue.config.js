@@ -48,6 +48,13 @@ module.exports = {
         //     '^/api': ''
         //   }
       },
+      "/tcc-interlib-service": {
+        target: "http://120.77.244.40:38081",
+        changeOrigin: true,
+        // pathRewrite: {
+        //   "^/api": "",
+        // },
+      },
     },
   },
   pluginOptions: {

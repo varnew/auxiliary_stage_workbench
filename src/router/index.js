@@ -35,6 +35,16 @@ export const routes = [
       import(/* webpackChunkName: "form" */ "../views/Form/index.vue"),
   },
   {
+    path: "/debug",
+    name: "debug",
+    meta: {
+      icon: "bug",
+      name: "测试",
+    },
+    component: () =>
+      import(/* webpackChunkName: "debug" */ "../views/Debug/index.vue"),
+  },
+  {
     path: "/about",
     name: "about",
     meta: {

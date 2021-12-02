@@ -32,8 +32,10 @@ export default {
   },
   render(h) {
     let gutter = scrollbarWidth();
+    gutter = 0; // 此处归零0
     let style = this.wrapStyle;
     if (gutter) {
+      console.log(gutter);
       const gutterWith = `-${gutter}px`;
       const gutterStyle = `margin-bottom: ${gutterWith}; margin-right: ${gutterWith};`;
       if (Array.isArray(this.wrapStyle)) {

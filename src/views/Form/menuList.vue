@@ -73,7 +73,7 @@ export default {
       display: flex;
       flex-wrap: wrap;
       .menu-item {
-        width: calc(50% - 10px);
+        width: 50%;
         text-align: center;
         padding: 6px 2px;
         margin: 6px 0px;

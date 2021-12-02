@@ -1,6 +1,6 @@
 import { FORM_COMPONENT } from "./template";
-export const downloadComponents = (formItems, filename) => {
-  let content = FORM_COMPONENT(formItems);
+export const downloadComponents = (laoutConfig, formItems, filename) => {
+  let content = FORM_COMPONENT(laoutConfig, formItems);
 
   if (window) {
     console.log(content);

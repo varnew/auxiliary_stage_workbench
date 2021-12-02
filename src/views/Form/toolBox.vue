@@ -1,5 +1,4 @@
 <script>
-import { downloadComponents } from "./downTemp";
 import eventBus from "./eventBus";
 import { MODE_MAP } from "./constant";
 export default {
@@ -40,11 +39,7 @@ export default {
     },
     // 输出表单
     export() {
-      const ref = this.$parent.$refs.RenderForm;
-      if (ref) {
-        const form = ref.modelRender;
-        downloadComponents(form, "test.vue");
-      }
+      eventBus.$emit("export", "test.vue");
     },
     handleModeChange(key) {
       const payload = MODE_MAP[key];

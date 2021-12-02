@@ -1,3 +1,6 @@
+import eventBus from "./eventBus";
+import _get from "lodash/get";
+import _cloneDeep from "lodash/cloneDeep";
 const chunk = (list, n) => {
   let result = [];
   for (let i = 0; i < list.length; i += n) {
@@ -5,7 +8,7 @@ const chunk = (list, n) => {
   }
   return result;
 };
-const UseForm = {
+export default {
   data() {
     return {
       activeId: null,
@@ -37,14 +40,20 @@ const UseForm = {
     },
     copy(item) {
       const index = this.getIndexByUuid(item.uuid);
-      const copyItem = { ...this.modelRender[index], uuid: Math.random() };
+      const copyItem = {
+        ..._cloneDeep(this.modelRender[index]),
+        uuid: Math.random(),
+      };
       this.modelRender.splice(index, 0, copyItem);
     },
-    dragItemClick({ uuid }) {
+    dragItemClick(item) {
+      const { uuid } = item;
       if (this.activeId === uuid) {
         this.activeId = null;
+        eventBus.$emit("updata:currentFormItem", null);
       } else {
         this.activeId = uuid;
+        eventBus.$emit("updata:currentFormItem", { ...item });
       }
     },
     // 渲染拖拽项工具栏
@@ -87,8 +96,8 @@ const UseForm = {
     },
     // 渲染表单项
     renderFormItem(item) {
-      const { render, prop, label, wrapperCol } = item;
-      let labelText = label;
+      const { render, prop, label, wrapperCol, attrs } = item;
+      let labelText = _get(attrs, "[0].value") || label;
       if (typeof label === "function") {
         labelText = label();
       }
@@ -117,7 +126,8 @@ const UseForm = {
       ));
     },
   },
-  render() {
+  render(h) {
+    this.h = h;
     let { modelRender, ref = "form" } = this;
     let {
       layout,
@@ -185,4 +195,3 @@ const UseForm = {
     );
   },
 };
-module.exports = UseForm;

@@ -3,7 +3,9 @@ import RenderForm from "./renderForm";
 import MenuList from "./menuList.vue";
 import ToolBox from "./toolBox.vue";
 import eventBus from "./eventBus";
+import AttrSetting from "./arrt.vue";
 import Scrollbar from "@/components/Scrollbar";
+import { downloadComponents } from "./downTemp";
 export default {
   name: "drag-form",
   components: {
@@ -11,6 +13,7 @@ export default {
     MenuList,
     ToolBox,
     Scrollbar,
+    AttrSetting,
   },
   data() {
     return {
@@ -19,6 +22,7 @@ export default {
         renderType: "PREVIEW", // PREVIEW | EDIT
         config: {},
       },
+      currentFormItem: null,
     };
   },
   mounted() {
@@ -28,9 +32,19 @@ export default {
     eventBus.$on("updata:renderType", (payload) => {
       this.setting.renderType = payload;
     });
+    eventBus.$on("updata:currentFormItem", (payload) => {
+      this.currentFormItem = payload;
+    });
     eventBus.$on("clone", (payload) => {
       const ref = this.$refs.RenderForm;
       ref && ref.modelRender.push(payload);
+    });
+    eventBus.$on("export", (payload) => {
+      const ref = this.$refs.RenderForm;
+      if (ref) {
+        const form = ref.modelRender;
+        downloadComponents(this.setting.config, form, payload);
+      }
     });
   },
   render() {
@@ -47,6 +61,7 @@ export default {
             style="padding: 10px 0 0;"
           />
         </Scrollbar>
+        <AttrSetting config={this.currentFormItem} />
       </section>
     );
   },

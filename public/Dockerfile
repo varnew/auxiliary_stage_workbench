@@ -21,5 +21,6 @@ COPY ./ /data_nginx/auxiliary_stage_workbench
 # 配置环境变量
 ENV PROXY_FANYI https://v2.alapi.cn/api/fanyi
 ENV PROXY_PASS https://api.jisuapi.com
+ENV PROXY_SW http://120.77.244.40:38081
 
 EXPOSE 8082

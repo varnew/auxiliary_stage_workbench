@@ -5,10 +5,12 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 import Antd from "ant-design-vue";
+import VueClipboard from "vue-clipboard2";
 import "ant-design-vue/dist/antd.css";
 import api from "@/api";
 Vue.config.productionTip = false;
 Vue.use(Antd);
+Vue.use(VueClipboard);
 Vue.prototype.$api = api;
 new Vue({
   router,

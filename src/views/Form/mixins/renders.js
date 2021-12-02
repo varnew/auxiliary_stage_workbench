@@ -10,6 +10,18 @@ export default {
               id: "0000",
               label: "文本框",
               prop: "",
+              attrs: [
+                {
+                  label: "表单名称",
+                  value: "",
+                  renderType: "input",
+                },
+                {
+                  label: "关联key",
+                  value: "",
+                  renderType: "select",
+                },
+              ],
               render: function () {
                 return <a-input vModel={this.form.input} />;
               },
@@ -18,7 +30,19 @@ export default {
               dragName: "数字框",
               id: "0001",
               label: "数字框",
-              prop: "number",
+              prop: "",
+              attrs: [
+                {
+                  label: "表单名称",
+                  value: "",
+                  renderType: "input",
+                },
+                {
+                  label: "关联key",
+                  value: "",
+                  renderType: "select",
+                },
+              ],
               render: function () {
                 return <a-input-number vModel={this.form.input} />;
               },
@@ -27,7 +51,19 @@ export default {
               dragName: "选择框",
               id: "0002",
               label: "选择框",
-              prop: "select",
+              prop: "",
+              attrs: [
+                {
+                  label: "表单名称",
+                  value: "",
+                  renderType: "input",
+                },
+                {
+                  label: "关联key",
+                  value: "",
+                  renderType: "select",
+                },
+              ],
               render: function () {
                 return (
                   <a-select vModel={this.form.select}>
@@ -45,6 +81,18 @@ export default {
               id: "0003",
               label: "日期",
               prop: "name",
+              attrs: [
+                {
+                  label: "表单名称",
+                  value: "",
+                  renderType: "input",
+                },
+                {
+                  label: "关联key",
+                  value: "",
+                  renderType: "select",
+                },
+              ],
               render: function () {
                 return <a-date-picker vModel={this.form.time} type="date" />;
               },
@@ -54,12 +102,23 @@ export default {
               id: "0004",
               label: "时间",
               prop: "name",
+              attrs: [
+                {
+                  label: "表单名称",
+                  value: "",
+                  renderType: "input",
+                },
+                {
+                  label: "关联key",
+                  value: "",
+                  renderType: "select",
+                },
+              ],
               render: function () {
                 return (
                   <a-time-picker
-                    vModel={this.form.timePicker}
-                    use12-hours
                     format="hh:mm:ss"
+                    vModel={this.form.timePicker}
                   />
                 );
               },
@@ -69,6 +128,18 @@ export default {
               id: "0005",
               label: "开关",
               prop: "switch",
+              attrs: [
+                {
+                  label: "表单名称",
+                  value: "",
+                  renderType: "input",
+                },
+                {
+                  label: "关联key",
+                  value: "",
+                  renderType: "select",
+                },
+              ],
               render: function () {
                 return <a-switch vModel={this.form.switch} />;
               },
@@ -78,6 +149,18 @@ export default {
               id: "0006",
               label: "多选框",
               prop: "switch",
+              attrs: [
+                {
+                  label: "表单名称",
+                  value: "",
+                  renderType: "input",
+                },
+                {
+                  label: "关联key",
+                  value: "",
+                  renderType: "select",
+                },
+              ],
               render: function () {
                 return (
                   <a-checkbox-group
@@ -93,6 +176,18 @@ export default {
               id: "0007",
               label: "单选框",
               prop: "radio",
+              attrs: [
+                {
+                  label: "表单名称",
+                  value: "",
+                  renderType: "input",
+                },
+                {
+                  label: "关联key",
+                  value: "",
+                  renderType: "select",
+                },
+              ],
               render: function () {
                 return (
                   <a-radio-group
@@ -107,6 +202,18 @@ export default {
               id: "0008",
               label: "多行文本",
               prop: "textarea",
+              attrs: [
+                {
+                  label: "表单名称",
+                  value: "",
+                  renderType: "input",
+                },
+                {
+                  label: "关联key",
+                  value: "",
+                  renderType: "select",
+                },
+              ],
               render: function () {
                 return <a-input vModel={this.form.textarea} type="textarea" />;
               },
@@ -208,6 +315,18 @@ export default {
               id: "0200",
               label: "",
               prop: "",
+              attrs: [
+                {
+                  label: "关联key1",
+                  value: "",
+                  renderType: "input",
+                },
+                {
+                  label: "关联key2",
+                  value: "",
+                  renderType: "input",
+                },
+              ],
               render: function () {
                 return (
                   <a-input vModel={this.form.inputIcon}>
@@ -225,6 +344,18 @@ export default {
               id: "0201",
               label: "",
               prop: "",
+              attrs: [
+                {
+                  label: "关联key1",
+                  value: "",
+                  renderType: "input",
+                },
+                {
+                  label: "关联key2",
+                  value: "",
+                  renderType: "input",
+                },
+              ],
               render: function () {
                 return (
                   <a-input-group compact>
@@ -245,6 +376,18 @@ export default {
               id: "0202",
               label: "",
               prop: "",
+              attrs: [
+                {
+                  label: "关联key1",
+                  value: "",
+                  renderType: "input",
+                },
+                {
+                  label: "关联key2",
+                  value: "",
+                  renderType: "input",
+                },
+              ],
               render: function () {
                 return (
                   <a-input-group compact>
@@ -268,6 +411,18 @@ export default {
               id: "0203",
               label: "",
               prop: "",
+              attrs: [
+                {
+                  label: "关联key1",
+                  value: "",
+                  renderType: "input",
+                },
+                {
+                  label: "关联key2",
+                  value: "",
+                  renderType: "input",
+                },
+              ],
               render: function () {
                 return (
                   <a-input-group compact>
@@ -282,4 +437,5 @@ export default {
       ],
     };
   },
+  mounted() {},
 };
