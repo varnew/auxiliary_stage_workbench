@@ -241,72 +241,72 @@ export default {
             },
           ],
         },
-        {
-          name: "按钮",
-          type: "render",
-          list: [
-            {
-              dragName: "按钮",
-              id: "0100",
-              label: "",
-              render: function () {
-                return <a-button type="primary">按钮</a-button>;
-              },
-            },
-            {
-              dragName: "按钮",
-              id: "0101",
-              label: "",
-              render: function () {
-                return <a-button>按钮</a-button>;
-              },
-            },
-            {
-              dragName: "按钮",
-              id: "0102",
-              label: "",
-              render: function () {
-                return <a-button type="danger">按钮</a-button>;
-              },
-            },
-            {
-              dragName: "按钮",
-              id: "0103",
-              label: "",
-              render: function () {
-                return (
-                  <a-button type="link" href="javascript:none">
-                    按钮
-                  </a-button>
-                );
-              },
-            },
-            {
-              dragName: "按钮",
-              id: "0104",
-              label: "",
-              render: function () {
-                return (
-                  <a-button type="primary" icon="search">
-                    按钮
-                  </a-button>
-                );
-              },
-            },
-            {
-              dragName: "按钮",
-              id: "0104",
-              label: "",
-              render: function () {
-                return (
-                  <a-button type="dashed" loading={true}>
-                    按钮
-                  </a-button>
-                );
-              },
-            },
-          ],
-        },
+        // {
+        //   name: "按钮",
+        //   type: "render",
+        //   list: [
+        //     {
+        //       dragName: "按钮",
+        //       id: "0100",
+        //       label: "",
+        //       render: function () {
+        //         return <a-button type="primary">按钮</a-button>;
+        //       },
+        //     },
+        //     {
+        //       dragName: "按钮",
+        //       id: "0101",
+        //       label: "",
+        //       render: function () {
+        //         return <a-button>按钮</a-button>;
+        //       },
+        //     },
+        //     {
+        //       dragName: "按钮",
+        //       id: "0102",
+        //       label: "",
+        //       render: function () {
+        //         return <a-button type="danger">按钮</a-button>;
+        //       },
+        //     },
+        //     {
+        //       dragName: "按钮",
+        //       id: "0103",
+        //       label: "",
+        //       render: function () {
+        //         return (
+        //           <a-button type="link" href="javascript:none">
+        //             按钮
+        //           </a-button>
+        //         );
+        //       },
+        //     },
+        //     {
+        //       dragName: "按钮",
+        //       id: "0104",
+        //       label: "",
+        //       render: function () {
+        //         return (
+        //           <a-button type="primary" icon="search">
+        //             按钮
+        //           </a-button>
+        //         );
+        //       },
+        //     },
+        //     {
+        //       dragName: "按钮",
+        //       id: "0104",
+        //       label: "",
+        //       render: function () {
+        //         return (
+        //           <a-button type="dashed" loading={true}>
+        //             按钮
+        //           </a-button>
+        //         );
+        //       },
+        //     },
+        //   ],
+        // },
         {
           name: "高级表单",
           list: [

@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.route("/service/exec").post(function (req, res) {
   const params = req.body;
-  exec("cd ../ & yarn start", (err, stdout, stderr) => {
+  exec(`cd ../ & ${params.content}`, (err, stdout, stderr) => {
     let code;
     if (!err && !stderr) {
       code = 200;
@@ -20,7 +20,7 @@ app.route("/service/exec").post(function (req, res) {
       code: code,
       data: {
         path: "./doc/file.vue",
-        log:
+        message:
           `err: \n ${err}` +
           "\n" +
           `stdout: \n ${stdout}` +

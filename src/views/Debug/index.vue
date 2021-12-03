@@ -152,7 +152,6 @@ export default {
       this.visible = true;
     },
     search() {
-      this.exec();
       const { name = "", path = "", tags = "" } = this.form;
       let filterList = this.allDataSource
         .filter((item) => {

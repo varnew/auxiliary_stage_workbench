@@ -18,7 +18,8 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   (data) => {
     if (data.data.code !== 200) {
-      const message = data.data.message || data.data.msg || "code未知错误";
+      const message =
+        data.data.message || data.data.msg || `code:${data.data.code} 未知错误`;
       Message.error({ content: message });
       // 权限不足需要登陆
       if (data.data.code === 401) {

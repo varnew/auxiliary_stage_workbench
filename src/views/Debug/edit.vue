@@ -2,6 +2,7 @@
 import { js_beautify } from "js-beautify";
 import { MODEL_FORM_ITMES } from "./constant";
 import { codemirror } from "vue-codemirror";
+import TempSelect from "./tempSelect";
 // base style
 import "codemirror/lib/codemirror.css";
 // theme css
@@ -13,7 +14,7 @@ export default {
   props: {
     data: Object,
   },
-  components: { codemirror },
+  components: { codemirror, TempSelect },
   data() {
     return {
       renderTypeOptions: [],
@@ -26,6 +27,8 @@ export default {
         line: true,
       },
       showCode: false,
+      visible: false,
+      copyType: "formObj",
     };
   },
   computed: {
@@ -119,8 +122,11 @@ export default {
       });
     },
     codePreview() {
-      this.code = this[this.key];
+      this.code = this[this.copyType];
       this.showCode = !this.showCode;
+    },
+    handleCopyType(type) {
+      this.code = this[type];
     },
   },
   render() {
@@ -148,20 +154,24 @@ export default {
           >
             {this.showCode ? "代码编辑" : "代码预览"}
           </a-button>
+          <a-radio-group
+            vModel={this.copyType}
+            button-style="solid"
+            size="small"
+            on-change={this.handleCopyType}
+          >
+            <a-radio-button value="formObj">form对象</a-radio-button>
+            <a-radio-button value="formRender">表单</a-radio-button>
+          </a-radio-group>
+          <a-divider type="vertical" />
           <a-button
             size="small"
             type="primary"
-            on-click={() => this.copy("formObj")}
+            on-click={() => (this.visible = true)}
           >
-            复制表单对象
+            表单配对
           </a-button>
-          <a-button
-            size="small"
-            type="primary"
-            on-click={() => this.copy("formRender")}
-          >
-            复制表单
-          </a-button>
+          <a-divider type="vertical" />
           <a-button size="small" on-click={() => this.$emit("cancel")}>
             返回
           </a-button>
@@ -187,6 +197,11 @@ export default {
             pagination={false}
           />
         )}
+        <TempSelect
+          visible={this.visible}
+          dataSource={dataSource}
+          on-cancel={() => (this.visible = false)}
+        />
       </article>
     );
   },
@@ -225,6 +240,9 @@ export default {
     .CodeMirror-scroll {
       height: 100%;
       overflow-y: hidden;
+    }
+    .CodeMirror-vscrollbar {
+      display: none !important;
     }
   }
 }
