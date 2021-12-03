@@ -152,6 +152,7 @@ export default {
       this.visible = true;
     },
     search() {
+      this.exec();
       const { name = "", path = "", tags = "" } = this.form;
       let filterList = this.allDataSource
         .filter((item) => {
@@ -167,6 +168,12 @@ export default {
         .filter((item) => item.name.indexOf(name) !== -1)
         .filter((item) => item.path.indexOf(path) !== -1);
       this.dataSource = filterList;
+    },
+    async exec() {
+      const res = await this.$api.exec({ name: "exec", content: "ls" });
+      console.log("----------");
+      console.log("res", res);
+      console.log("----------");
     },
   },
   render() {
@@ -198,8 +205,8 @@ export default {
           </a-space>
           <a-form-model layout="inline" style="margin-right: -16px;">
             {renderFormItem("分组", "tags", this.tags)}
-            {renderFormItem("路径", "path", [])}
-            {renderFormItem("名称", "name", [])}
+            {renderFormItem("路径", "path", this.paths)}
+            {renderFormItem("名称", "name", this.names)}
             <a-form-model-item>
               <a-button type="primary" size="small" on-click={this.search}>
                 查询
@@ -211,8 +218,8 @@ export default {
           columns={this.columns}
           data-source={this.dataSource}
           style="margin: 0px 10px;"
-          scroll={{ y: "calc(100vh - 184px)" }}
-          pagination={{ pageSize: 50 }}
+          scroll={{ y: "calc(100vh - 174px)" }}
+          pagination={{ pageSize: 50, size: "small" }}
         />
         {this.visible && (
           <edit data={this.current} on-cancel={() => (this.visible = false)} />

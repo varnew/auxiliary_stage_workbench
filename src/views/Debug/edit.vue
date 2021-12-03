@@ -1,14 +1,31 @@
 <script>
 import { js_beautify } from "js-beautify";
 import { MODEL_FORM_ITMES } from "./constant";
+import { codemirror } from "vue-codemirror";
+// base style
+import "codemirror/lib/codemirror.css";
+// theme css
+import "codemirror/theme/base16-dark.css";
+// language
+import "codemirror/mode/vue/vue.js";
 export default {
   name: "edit",
   props: {
     data: Object,
   },
+  components: { codemirror },
   data() {
     return {
       renderTypeOptions: [],
+      code: "",
+      cmOption: {
+        tabSize: 4,
+        mode: "text/javascript",
+        theme: "base16-dark",
+        lineNumbers: true,
+        line: true,
+      },
+      showCode: false,
     };
   },
   computed: {
@@ -20,7 +37,9 @@ export default {
         },
         {
           title: "文本",
-          dataIndex: "description",
+          customRender: (text, record) => (
+            <a-input size="small" vModel={record.description} />
+          ),
         },
         {
           title: "是否必填",
@@ -36,7 +55,7 @@ export default {
           width: 100,
         },
         {
-          title: "操作",
+          title: "表单模版",
           dataIndex: "action",
           fixed: "right",
           width: 120,
@@ -94,9 +113,14 @@ export default {
   },
   methods: {
     copy(key) {
+      this.key = key;
       this.$copyText(this[key]).then(() => {
         this.$message.success("复制成功");
       });
+    },
+    codePreview() {
+      this.code = this[this.key];
+      this.showCode = !this.showCode;
     },
   },
   render() {
@@ -120,6 +144,13 @@ export default {
           <a-button
             size="small"
             type="primary"
+            on-click={() => this.codePreview()}
+          >
+            {this.showCode ? "代码编辑" : "代码预览"}
+          </a-button>
+          <a-button
+            size="small"
+            type="primary"
             on-click={() => this.copy("formObj")}
           >
             复制表单对象
@@ -136,12 +167,26 @@ export default {
           </a-button>
         </a-space>
         <a-divider dashed style="margin: 10px 0px;" />
-        <a-table
-          columns={this.columns}
-          data-source={dataSource}
-          scroll={{ y: "calc(100vh - 180px)" }}
-          pagination={false}
-        />
+        {this.showCode && (
+          <div style="position: relative;">
+            <codemirror
+              vModel={this.code}
+              options={this.cmOption}
+              style="height: calc(100vh - 148px)"
+            />
+            <span class="copy-btn" on-click={() => this.copy("code")}>
+              复制
+            </span>
+          </div>
+        )}
+        {!this.showCode && (
+          <a-table
+            columns={this.columns}
+            data-source={dataSource}
+            scroll={{ y: "calc(100vh - 180px)" }}
+            pagination={false}
+          />
+        )}
       </article>
     );
   },
@@ -162,6 +207,25 @@ export default {
     position: absolute;
     top: 10px;
     right: 10px;
+  }
+  .copy-btn {
+    padding: 2px 4px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #f2f2f2;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    cursor: pointer;
+    z-index: 999;
+  }
+}
+::v-deep {
+  .CodeMirror {
+    height: 100% !important;
+    .CodeMirror-scroll {
+      height: 100%;
+      overflow-y: hidden;
+    }
   }
 }
 ::v-deep {

@@ -2,6 +2,7 @@ let path = require("path");
 const webpack = require("webpack");
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 const productionGzipExtensions = ["js", "css"];
 const isProd = process.env.NODE_ENV === "production";
@@ -55,6 +56,13 @@ module.exports = {
         //   "^/api": "",
         // },
       },
+      "/service": {
+        target: "http://localHost:3001",
+        changeOrigin: true,
+        // pathRewrite: {
+        //   "^/api": "",
+        // },
+      },
     },
   },
   pluginOptions: {
@@ -86,6 +94,14 @@ module.exports = {
           threshold: 10240,
           minRatio: 0.8,
         })
+      );
+      config.plugins.push(
+        new CopyPlugin([
+          {
+            from: "service/*",
+            to: "./",
+          },
+        ])
       );
     }
     // if prod, add externals
