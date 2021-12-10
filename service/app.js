@@ -1,5 +1,7 @@
 const express = require("express");
+const request = require("request");
 const bodyParser = require("body-parser");
+const qs = require("querystring");
 const { exec } = require("child_process");
 
 const app = express();
@@ -28,6 +30,16 @@ app.route("/service/exec").post(function (req, res) {
           `stderr: \n ${stderr}`,
       },
     });
+  });
+});
+app.route("/service/request").post(function (req, res) {
+  const body = req.body;
+  const api = body.api;
+  const content = body.content;
+  // const type = params.type;
+  // const headers = params.headers;
+  request.post({ url: api, form: content }, function (error, response, body) {
+    res.send(body);
   });
 });
 

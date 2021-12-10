@@ -2,10 +2,26 @@ import axios from "axios";
 import { message as Message } from "ant-design-vue";
 import { removeEmptyValue } from "./utils";
 
+// 取消请求
+function cancelRequest(config) {
+  config.cancelToken = new axios.CancelToken((cancel) => {
+    // cancel 函数的参数会作为 promise 的 error 被捕获
+    cancel(`${config.url} 请求已取消`);
+  });
+}
+
+const keyMap = new Map();
+
 // 请求前拦截
 axios.interceptors.request.use(
   (config) => {
     // config.headers.debug = '1' // 全局添加headers
+    // 取消请求
+    if (keyMap.has(config.api)) {
+      cancelRequest(config);
+    } else {
+      keyMap.set(config.api, config);
+    }
     return config;
   },
   (err) => {
@@ -17,6 +33,7 @@ axios.interceptors.request.use(
 // 请求结果返回拦截
 axios.interceptors.response.use(
   (data) => {
+    keyMap.delete(data.config.pai);
     if (data.data.code !== 200) {
       const message =
         data.data.message || data.data.msg || `code:${data.data.code} 未知错误`;
@@ -29,7 +46,7 @@ axios.interceptors.response.use(
     return data;
   },
   (err) => {
-    let message = "";
+    let message = err.message;
     if (err && err.response) {
       switch (err.response.status) {
         case 302:
@@ -79,11 +96,7 @@ axios.interceptors.response.use(
     if (err.message.includes("timeout")) message = "网络请求超时！";
     if (err.message.includes("Network"))
       message = window.navigator.onLine ? "服务端异常！" : "您断网了！";
-
-    Message({
-      type: "error",
-      content: message,
-    });
+    Message.error({ content: message });
     return Promise.resolve(err);
   }
 );

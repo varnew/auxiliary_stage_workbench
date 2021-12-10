@@ -152,6 +152,7 @@ export default {
       this.visible = true;
     },
     search() {
+      this.wanyi();
       const { name = "", path = "", tags = "" } = this.form;
       let filterList = this.allDataSource
         .filter((item) => {
@@ -168,11 +169,16 @@ export default {
         .filter((item) => item.path.indexOf(path) !== -1);
       this.dataSource = filterList;
     },
-    async exec() {
-      const res = await this.$api.exec({ name: "exec", content: "ls" });
-      console.log("----------");
+    async wanyi() {
+      const res = await this.$api.serviceRequest({
+        api: "https://v2.alapi.cn/api/comment",
+        content: {
+          id: 1400256289,
+          token: "UAeGrSjsrhL0vIJV",
+        },
+        type: "POST",
+      });
       console.log("res", res);
-      console.log("----------");
     },
   },
   render() {

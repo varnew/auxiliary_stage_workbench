@@ -128,6 +128,12 @@ export default {
     handleCopyType(type) {
       this.code = this[type];
     },
+    async exec() {
+      const res = await this.$api.exec({ name: "exec", content: "ls" });
+      console.log("----------");
+      console.log("res", res);
+      console.log("----------");
+    },
   },
   render() {
     const {
@@ -147,11 +153,11 @@ export default {
           路径：{path}
         </h6>
         <a-space class="btn-box">
-          <a-button
-            size="small"
-            type="primary"
-            on-click={() => this.codePreview()}
-          >
+          <a-button size="small" type="primary" on-click={this.exec}>
+            导出
+          </a-button>
+          <a-divider type="vertical" />
+          <a-button size="small" type="primary" on-click={this.codePreview}>
             {this.showCode ? "代码编辑" : "代码预览"}
           </a-button>
           <a-radio-group
