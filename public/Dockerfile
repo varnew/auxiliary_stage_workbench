@@ -1,18 +1,11 @@
 FROM openresty/openresty:alpine
 RUN apk update \
  && apk upgrade \
- && apk add bash \
- && apk add git
+ && apk add bash
 
 # 系统设置(设置时区)
 RUN rm -rf /etc/localtime \
  && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-
-#https
-RUN git clone https://github.com/certbot/certbot \
- && cd certbot \
- && ./certbot-auto certonly --webroot --agree-tos -v -t --email varnew@163.com -w /usr/local/nginx/html/ -d www.varnew.com \
- && cd ../
 
 RUN set -ex && \
     rm /etc/nginx/conf.d/default.conf

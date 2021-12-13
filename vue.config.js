@@ -101,10 +101,6 @@ module.exports = {
             from: "service/*",
             to: "./",
           },
-          {
-            from: "certbot/*",
-            to: "./",
-          },
         ])
       );
     }
