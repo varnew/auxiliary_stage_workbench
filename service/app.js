@@ -1,14 +1,16 @@
 const express = require("express");
 const request = require("request");
 const bodyParser = require("body-parser");
-const qs = require("querystring");
 const { exec } = require("child_process");
+const path = require("path");
+const fs = require("fs");
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// 执行shell命令
 app.route("/service/exec").post(function (req, res) {
   const params = req.body;
   exec(`cd ../ & ${params.content}`, (err, stdout, stderr) => {
@@ -32,6 +34,7 @@ app.route("/service/exec").post(function (req, res) {
     });
   });
 });
+// 第三方请求
 app.route("/service/request").post(function (req, res) {
   const body = req.body;
   const api = body.api;
@@ -41,6 +44,33 @@ app.route("/service/request").post(function (req, res) {
   request.post({ url: api, form: content }, function (error, response, body) {
     res.send(body);
   });
+});
+// 自动i18n
+app.route("/service/i18n").get(function (req, res) {
+  fs.readFile(
+    path.join(__dirname, "../src/views/About.vue"),
+    "utf-8",
+    function (error, data) {
+      //  用error来判断文件是否读取成功
+      if (error) res.send(error);
+
+      const i18n = ["开始", "我们开始了"];
+      let fileText;
+      i18n.forEach((text) => {
+        const regExp = new RegExp(text, "g");
+        fileText = data.replace(regExp, `this.$t('${text}')`);
+      });
+
+      fs.writeFile(
+        path.join(__dirname, "../src/views/About1.vue"),
+        fileText,
+        (err) => {
+          err && res.send(err);
+          !err && res.send("success");
+        }
+      );
+    }
+  );
 });
 
 app.listen(3001, function () {
