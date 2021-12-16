@@ -7,7 +7,7 @@ export default {
   name: "fanyi",
   data() {
     return {
-      token: "UAeGrSjsrhL0vIJV", // https://admin.alapi.cn/dashboard/workplace中获取
+      token: "A6fpIEh2S1PVaGk9", // https://admin.alapi.cn/dashboard/workplace中获取
       from: "auto",
       to: "cht",
       content: "",
@@ -24,7 +24,7 @@ export default {
       const resultList = [];
       list.forEach((item) => {
         const text = rContent.substring(index, index + item.length);
-        index += item.length;
+        index += item.length + 1;
         resultList.push(text);
       });
       const zh_cn_list = list.map((item) => {
@@ -50,19 +50,34 @@ export default {
     // 翻译
     async enter() {
       this.rContent = "";
-      const sourceList = this.content.split(/[(\r\n)\r\n]+/);
-      this.loading.seatch = true;
-      const res = await this.$api.fanyi({
-        from: this.from,
-        to: this.to,
-        q: this.content,
-        token: this.token,
-      });
-      this.loading.seatch = false;
-      if (_get(res, "data.code") !== 200) {
-        return;
+      const content = this.content;
+      const sourceList = content.split(/[\r\n]+/);
+      let dst;
+      let res;
+      switch (this.to) {
+        case "cht": // 繁体使用该接口比较稳定
+          res = await this.$api.fanyi1({
+            appkey: "b61baecb78ee7cdf",
+            content: content,
+            type: "2t",
+          });
+          dst = _get(res, "data.result.rcontent");
+          break;
+
+        default:
+          res = await this.$api.fanyi2({
+            from: this.from,
+            to: this.to,
+            q: this.content,
+            token: this.token,
+          });
+          this.loading.seatch = false;
+          if (_get(res, "data.code") !== 200) {
+            return;
+          }
+          dst = _get(res, "data.data.dst", "");
+          break;
       }
-      let dst = _get(res, "data.data.dst", "");
       this.buildI18n(sourceList, dst);
     },
     // 复制
