@@ -98,8 +98,8 @@ module.exports = {
       config.plugins.push(
         new CopyPlugin([
           {
-            from: "service/*",
-            to: "./",
+            from: "service",
+            to: "./service",
           },
         ])
       );
