@@ -33,7 +33,7 @@ axios.interceptors.request.use(
 // 请求结果返回拦截
 axios.interceptors.response.use(
   (data) => {
-    keyMap.delete(data.config.pai);
+    keyMap.delete();
     if (data.data.code !== 200) {
       const message =
         data.data.message || data.data.msg || `code:${data.data.code} 未知错误`;
@@ -46,6 +46,7 @@ axios.interceptors.response.use(
     return data;
   },
   (err) => {
+    keyMap.clear;
     let message = err.message;
     if (err && err.response) {
       switch (err.response.status) {
