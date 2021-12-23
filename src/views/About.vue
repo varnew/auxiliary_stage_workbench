@@ -1,15 +1,27 @@
 <script>
 import CodeEditor from "@/components/CodeEditor";
+import _get from "lodash/get";
 export default {
   components: { CodeEditor },
   data() {
     return {
       code: "",
       visible: false,
+      tree: [],
     };
   },
+  mounted() {
+    this.getFiles();
+  },
   methods: {
-    async handleClick(fileName) {
+    async getFiles() {
+      const res = await this.$api.getFiles();
+      this.tree = res.data.data;
+    },
+    async handleClick(key, e) {
+      const path = _get(e, "selectedNodes[0].data.props.dataRef.path");
+      const index = path.indexOf("files") + 6;
+      const fileName = path.substring(index);
       const res = await this.$api.loadFile({ name: fileName });
       this.code = res.data.data;
     },
@@ -30,21 +42,17 @@ export default {
         <a-drawer
           title="记忆百宝盒"
           placement="right"
+          mask={false}
           visible={this.visible}
           on-close={() => {
             this.visible = false;
           }}
         >
-          <div class="menu">
-            <div
-              class="menu-item"
-              on-click={() => {
-                this.handleClick("vue-router.js");
-              }}
-            >
-              vue-router
-            </div>
-          </div>
+          <a-tree
+            defaultExpandAll
+            tree-data={this.tree}
+            on-select={this.handleClick}
+          />
         </a-drawer>
       </section>
     );

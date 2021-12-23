@@ -9,3 +9,6 @@ export function serviceRequest(params = {}) {
 export function loadFile(params) {
   return get(`${baseURL}/loadFile`, params);
 }
+export function getFiles(params) {
+  return get(`${baseURL}/files`, params);
+}
