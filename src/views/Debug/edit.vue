@@ -1,31 +1,18 @@
 <script>
 import { js_beautify } from "js-beautify";
 import { MODEL_FORM_ITMES } from "./constant";
-import { codemirror } from "vue-codemirror";
+import CodeEditor from "@/components/CodeEditor";
 import TempSelect from "./tempSelect";
-// base style
-import "codemirror/lib/codemirror.css";
-// theme css
-import "codemirror/theme/base16-dark.css";
-// language
-import "codemirror/mode/vue/vue.js";
 export default {
   name: "edit",
   props: {
     data: Object,
   },
-  components: { codemirror, TempSelect },
+  components: { CodeEditor, TempSelect },
   data() {
     return {
       renderTypeOptions: [],
       code: "",
-      cmOption: {
-        tabSize: 4,
-        mode: "text/javascript",
-        theme: "base16-dark",
-        lineNumbers: true,
-        line: true,
-      },
       showCode: false,
       visible: false,
       copyType: "formObj",
@@ -185,9 +172,8 @@ export default {
         <a-divider dashed style="margin: 10px 0px;" />
         {this.showCode && (
           <div style="position: relative;">
-            <codemirror
+            <code-editor
               vModel={this.code}
-              options={this.cmOption}
               style="height: calc(100vh - 148px)"
             />
             <span class="copy-btn" on-click={() => this.copy("code")}>

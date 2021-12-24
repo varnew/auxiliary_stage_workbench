@@ -68,7 +68,7 @@ class VueRouter {
       },
     });
     const self = this;
-    // 注册RouterView事件
+    // 注册RouterView组件
     Vue.component("router-view", {
       render(h) {
         const cm = self.routeMap[self.data.current];

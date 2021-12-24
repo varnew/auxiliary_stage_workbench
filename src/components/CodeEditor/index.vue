@@ -8,12 +8,17 @@ import "codemirror/theme/base16-dark.css";
 import "codemirror/mode/vue/vue.js";
 export default {
   name: "code-editor",
+  model: {
+    prop: "code",
+    event: "input",
+  },
   components: { codemirror },
   props: {
     code: String,
   },
   data() {
     return {
+      currentCode: "",
       cmOption: {
         tabSize: 4,
         mode: "text/javascript",
@@ -23,10 +28,20 @@ export default {
       },
     };
   },
+  watch: {
+    currentCode: {
+      handler(newValue) {
+        this.$emit(newValue, "input");
+      },
+    },
+  },
+  mounted() {
+    this.currentCode = this.code;
+  },
   render() {
     return (
       <codemirror
-        vModel={this.code}
+        vModel={this.currentCode}
         options={this.cmOption}
         style="height: 100%"
       />

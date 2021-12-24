@@ -29,7 +29,7 @@ export default {
   render() {
     return (
       <section class="about">
-        <code-Editor code={this.code} />
+        <code-editor code={this.code} />
         <div class="hover-icon">
           <a-icon
             type="folder-open"
