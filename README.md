@@ -1,5 +1,3 @@
-# aaa
-
 ## Project setup
 ```
 yarn install
@@ -20,5 +18,7 @@ yarn build
 yarn lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### vue-cli对webpack做了深度封装，通过下入指令可以打印出相关配置
+```
+vue inspect > cli-webpack.config.js 
+```
