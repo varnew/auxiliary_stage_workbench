@@ -10,9 +10,36 @@ export default {
   data() {
     return {
       visible: true,
+      options: {
+        keys: [
+          { label: "name", value: "name" },
+          { label: "age", value: "age" },
+        ],
+        btnType: [
+          { label: "primary", value: "primary" },
+          { label: "dashed", value: "dashed" },
+          { label: "danger", value: "danger" },
+          { label: "link", value: "link" },
+          { label: "默认", value: undefined },
+        ],
+        btnSize: [
+          { label: "small", value: "small" },
+          { label: "large", value: "large" },
+          { label: "默认", value: undefined },
+        ],
+        btnShape: [
+          { label: "circle", value: "circle" },
+          { label: "round", value: "round" },
+          { label: "默认", value: undefined },
+        ],
+      },
     };
   },
   computed: {
+    attrList() {
+      const attrs = this.config ? this.config.attrs : [];
+      return Object.keys(attrs).map((key) => attrs[key]);
+    },
     iconType() {
       return this.visible ? "double-right" : "double-left";
     },
@@ -35,10 +62,7 @@ export default {
       if (item.renderType === "select") {
         return (
           <a-select vModel={item.value}>
-            {[
-              { label: "name", value: "name" },
-              { label: "age", value: "age" },
-            ].map((option) => (
+            {this.options[item.optionKey || "keys"].map((option) => (
               <a-select-option value={option.value}>
                 {option.label}
               </a-select-option>
@@ -52,8 +76,8 @@ export default {
         <h4 class="header">属性配置</h4>
         <div class="content">
           <a-form-model model={this.model}>
-            {!!this.config &&
-              this.config.attrs.map((item) => {
+            {!!this.attrList.length &&
+              this.attrList.map((item) => {
                 return (
                   <a-form-model-item label={item.label}>
                     {renderItem(item)}

@@ -1,4 +1,5 @@
 <script>
+import _cloneDeep from "lodash/cloneDeep";
 import draggable from "vuedraggable";
 import eventBus from "./eventBus";
 import renders from "./mixins/renders";
@@ -21,11 +22,15 @@ export default {
   methods: {
     // 可用于修改拽宅携带的数据
     cloneDog(payload) {
-      return { ...payload, uuid: Math.random() };
+      const temp = _cloneDeep(payload);
+      temp.uuid = Math.random();
+      return temp;
     },
     // 点击添加数据
-    handleItemClick(item) {
-      eventBus.$emit("clone", { ...item, uuid: Math.random() });
+    handleItemClick(payload) {
+      const temp = _cloneDeep(payload);
+      temp.uuid = Math.random();
+      eventBus.$emit("clone", temp);
     },
   },
   render() {
@@ -47,7 +52,9 @@ export default {
                     class="menu-item"
                     on-click={() => this.handleItemClick(item)}
                   >
-                    {group.type === "render" ? item.render() : item.dragName}
+                    {group.type === "render"
+                      ? item.render.call(null)
+                      : item.dragName}
                   </div>
                 ))}
               </draggable>

@@ -1,0 +1,18 @@
+.custom-form {
+  .drag-item {
+    margin: 5px;
+    position: relative;
+    &.chosen-item {
+      display: inline-block;
+    }
+  }
+  .inline-block {
+    display: inline-block;
+  }
+  ::v-deep{
+    .ant-form-item {
+      margin: 0px !important;
+      padding: 0px !important;
+    }
+  }
+}

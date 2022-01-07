@@ -114,6 +114,7 @@ export default {
         pointer-events: none;
       }
       .drag-item-tool {
+        min-width: 90px;
         display: inline-block;
         padding: 2px 0;
         position: absolute;
@@ -121,6 +122,7 @@ export default {
         right: 10px;
         border-radius: 10px;
         background: #fff;
+        z-index: 1;
         .icon {
           width: 36px;
         }

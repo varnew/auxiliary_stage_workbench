@@ -1,26 +1,19 @@
 <script>
+import businessTable from "@/views/Dep/table";
 export default {
   name: "Home",
+  components: { businessTable },
   data() {
     return {
-      arr: [1, 2, 3],
-      obj: {
-        a: {
-          name: "12",
-        },
+      form: {
+        name: "",
       },
     };
   },
-  methods: {
-    handle() {},
-  },
+  mounted() {},
+  methods: {},
   render() {
-    return (
-      <section>
-        {this.test}
-        <a-button on-click={this.handle}>点击</a-button>
-      </section>
-    );
+    return <businessTable form={this.form}></businessTable>;
   },
 };
 </script>

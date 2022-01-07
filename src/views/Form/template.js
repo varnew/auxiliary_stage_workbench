@@ -1,13 +1,16 @@
 // import { js_beautify } from "js-beautify";
 import _cloneDeep from "lodash/cloneDeep";
-import { MODEL_FORM_ITMES } from "./constant";
+import ejs from "ejs";
 // import _get from "lodash/get";
 // const pretty = require("js-object-pretty-print").pretty;
 
 // 获取表单项配置
 const getModelRender = (list = []) => {
   const tempList = list.map((item) => {
-    return MODEL_FORM_ITMES[item.id](item.attrs);
+    return `{
+      label: "${item.label}",
+      render: () => ${ejs.render(item.template, { item: item })}
+    }`;
   });
   let text = `modelRender() {
     return [
@@ -24,7 +27,7 @@ const getLayoutConfig = (layoutConfig) => {
     const value =
       typeof layoutConfig[key] === "string"
         ? `"${layoutConfig[key]}"`
-        : layoutConfig[key];
+        : JSON.stringify(layoutConfig[key]);
     textList.push(`${key}: ${value}`);
   });
   return textList.join(",");
@@ -42,11 +45,12 @@ export const FORM_COMPONENT = (layoutConfig, formItems = []) => {
   };
   let temp = `
 <script>
-import UseForm from "./useForm";
+import useForm from "@pgs/portableForm";
+import "@pgs/portableForm/index.less";
 export default {
   name: 'render-form',
   components: {},
-  mixins: [UseForm],
+  mixins: [useForm],
   data: () => {
     return {
       form: {},

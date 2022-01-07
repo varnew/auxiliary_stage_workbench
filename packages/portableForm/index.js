@@ -1,6 +1,4 @@
-import eventBus from "./eventBus";
 import _get from "lodash/get";
-import _cloneDeep from "lodash/cloneDeep";
 const chunk = (list, n) => {
   let result = [];
   for (let i = 0; i < list.length; i += n) {
@@ -16,13 +14,7 @@ export default {
   },
   computed: {
     isInline() {
-      return this.setting.mode.indexOf("inline") !== -1;
-    },
-    isRender() {
-      return this.setting.renderType === "EDIT";
-    },
-    isDrag() {
-      return this.setting.renderType === "PREVIEW";
+      return this.mode.indexOf("inline") !== -1;
     },
   },
   methods: {
@@ -35,50 +27,6 @@ export default {
         }
       }
     },
-    // 删除项
-    delete(item) {
-      const index = this.getIndexByUuid(item.uuid);
-      this.modelRender.splice(index, 1);
-    },
-    // 复制项
-    copy(item) {
-      const index = this.getIndexByUuid(item.uuid);
-      const copyItem = {
-        ..._cloneDeep(this.modelRender[index]),
-        uuid: Math.random(),
-      };
-      this.modelRender.splice(index, 0, copyItem);
-    },
-    dragItemClick(item) {
-      const { uuid } = item;
-      if (this.activeId === uuid) {
-        this.activeId = null;
-        eventBus.$emit("updata:currentFormItem", null);
-      } else {
-        this.activeId = uuid;
-        eventBus.$emit("updata:currentFormItem", { ...item });
-      }
-    },
-    // 渲染拖拽项工具栏
-    renderDragTool(item) {
-      return (
-        <div class="drag-item-tool">
-          <a-icon
-            class="icon"
-            type="delete"
-            theme="twoTone"
-            on-click={() => this.delete(item)}
-          />
-          <a-divider type="vertical" />
-          <a-icon
-            class="icon"
-            type="copy"
-            theme="twoTone"
-            on-click={() => this.copy(item)}
-          />
-        </div>
-      );
-    },
     // 拖拽辅助块
     renderDragItem(item, render) {
       const { uuid } = item;
@@ -86,13 +34,10 @@ export default {
         <div
           class={{
             "drag-item": true,
-            "drag-active": this.activeId === uuid && this.isDrag,
             "inline-block": this.isInline,
           }}
           key={uuid}
-          on-click={() => this.dragItemClick(item)}
         >
-          {this.activeId === uuid && this.isDrag && this.renderDragTool(item)}
           {render && render(item)}
         </div>
       );
@@ -141,7 +86,7 @@ export default {
       hideRequiredMark,
       labelAlign,
       validateOnRuleChange,
-    } = this.setting.config;
+    } = this;
     let modelProps = {
       model: this.form,
       rules: this.rules,
@@ -166,34 +111,16 @@ export default {
             return this.renderFormItem(item);
           });
     };
-    const renderDarg = () => (
-      <draggable
-        class="dragArea container"
-        list={this.modelRender}
-        group="people"
-        chosen-class="chosen-item"
-      >
-        {renderItem()}
-        {this.modelRender.length === 0 && (
-          <a-empty
-            image="https://file.qingflow.com/assets/empty-content/applying-editorial-tips.png"
-            image-style={{ height: "200px" }}
-            description="拖拽或点击左侧字段创建表单"
-          />
-        )}
-      </draggable>
-    );
     return (
       <a-form-model
         ref={ref}
         class={{
           "custom-form": true,
-          "render-form": this.isRender,
-          "drag-form": this.isDrag,
+          "render-form": true,
         }}
         {...{ props: { ...modelProps } }}
       >
-        {this.isRender ? renderItem() : renderDarg()}
+        {renderItem()}
       </a-form-model>
     );
   },

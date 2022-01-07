@@ -4,7 +4,7 @@ export const downloadComponents = (laoutConfig, formItems, filename) => {
 
   if (window) {
     console.log(content);
-    return;
+    return content;
   }
 
   // 创建a标签

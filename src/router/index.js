@@ -54,6 +54,16 @@ export const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
+  {
+    path: "/render",
+    name: "render",
+    meta: {
+      icon: "like",
+      name: "渲染测试",
+    },
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Form/renderTest.vue"),
+  },
 ];
 
 const router = new VueRouter({
