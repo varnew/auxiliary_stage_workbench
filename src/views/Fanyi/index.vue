@@ -20,18 +20,11 @@ export default {
   methods: {
     // 生成i8n对象
     buildI18n(list, rContent) {
-      let index = 0;
-      const resultList = [];
-      list.forEach((item) => {
-        const text = rContent.substring(index, index + item.length);
-        index += item.length + 1;
-        resultList.push(text);
+      const zh_cn_list = rContent.map((item) => {
+        return `"${item.src}": "${item.src}"`;
       });
-      const zh_cn_list = list.map((item) => {
-        return `"${item}": "${item}"`;
-      });
-      const zh_hk_list = list.map((item, index) => {
-        return `"${item}": "${resultList[index]}"`;
+      const zh_hk_list = rContent.map((item) => {
+        return `"${item.src}": "${item.dst}"`;
       });
       this.rContent = js_beautify(
         `{
@@ -54,29 +47,23 @@ export default {
       const sourceList = content.split(/[\r\n]+/);
       let dst;
       let res;
-      switch (this.to) {
-        case "cht": // 繁体使用该接口比较稳定
-          res = await this.$api.fanyi1({
-            appkey: "b61baecb78ee7cdf",
-            content: content,
-            type: "2t",
-          });
-          dst = _get(res, "data.result.rcontent");
-          break;
-
-        default:
-          res = await this.$api.fanyi2({
-            from: this.from,
-            to: this.to,
-            q: this.content,
-            token: this.token,
-          });
-          this.loading.seatch = false;
-          if (_get(res, "data.code") !== 200) {
-            return;
-          }
-          dst = _get(res, "data.data.dst", "");
-          break;
+      res = await this.$api.baiduFanyi({
+        from: this.from,
+        to: this.to,
+        q: this.content,
+      });
+      this.loading.seatch = false;
+      if (_get(res, "data.code") !== 200) {
+        return;
+      }
+      dst = _get(res, "data.data.trans_result", []);
+      if (sourceList.length !== dst.length) {
+        this.$notification.warning({
+          duration: null,
+          message: "智能检测报警",
+          description:
+            "当前输入文本数组与返回数组长度不一致，通常是由于翻译的类型相同导致的，这将导致i18n对象生成错误，请检查！",
+        });
       }
       this.buildI18n(sourceList, dst);
     },

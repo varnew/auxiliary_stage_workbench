@@ -5,6 +5,7 @@ const { exec } = require("child_process");
 const path = require("path");
 const fs = require("fs");
 const https = require("https");
+const md5 = require("md5");
 
 const app = express();
 
@@ -145,6 +146,34 @@ app.route("/service/files").get(async (req, res) => {
     data,
   });
 });
+// 百度翻译
+app.route("/service/baidu/fanyi").post((req, res) => {
+  const url = `https://fanyi-api.baidu.com/api/trans/vip/translate`;
+  const {
+    q,
+    from,
+    to,
+    appid = "20210819000921184",
+    secret = "uRWgs0kaWwCJ5Oj4PUPo",
+    salt = Math.random(),
+  } = req.body;
+  const sign = md5(`${appid}${q}${salt}${secret}`);
+  const form = {
+    q,
+    from,
+    to,
+    appid,
+    salt,
+    sign,
+  };
+  request.post({ url, form }, function (error, response, body) {
+    res.send({
+      code: 200,
+      data: JSON.parse(body),
+    });
+  });
+});
+
 app.route("/service/loadFile").get(function (req, res) {
   const { name } = req.query;
   fs.readFile(

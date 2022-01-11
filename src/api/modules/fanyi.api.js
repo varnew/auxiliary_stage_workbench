@@ -10,3 +10,6 @@ export function fanyi1(params = {}) {
 export function fanyi2(params = {}) {
   return post(`https://v2.alapi.cn/api/fanyi`, params);
 }
+export function baiduFanyi(params = {}) {
+  return post(`/service/baidu/fanyi`, params);
+}

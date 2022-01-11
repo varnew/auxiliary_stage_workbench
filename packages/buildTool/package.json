@@ -1,0 +1,20 @@
+{
+  "name": "buildtool",
+  "version": "1.0.0",
+  "description": "",
+  "main": "plopfile.js",
+  "scripts": {
+    "new": "plop"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2",
+    "md5": "^2.3.0",
+    "plop": "^2.7.4"
+  },
+  "devDependencies": {
+    "git-user-info": "^1.0.1"
+  }
+}

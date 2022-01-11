@@ -42,7 +42,7 @@ module.exports = {
         //     '^/api': ''
         //   }
       },
-      "/fanyi": {
+      "/fanyi/": {
         target: "https://v2.alapi.cn",
         changeOrigin: true,
         //   pathRewrite: {
@@ -57,7 +57,7 @@ module.exports = {
         // },
       },
       "/service": {
-        target: "http://localHost:3001",
+        target: "http://localhost:3001",
         changeOrigin: true,
         // pathRewrite: {
         //   "^/api": "",

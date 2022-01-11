@@ -1,6 +1,7 @@
 export const FANYI = [
   { value: "auto", label: "自动检测" },
   { value: "zh", label: "中文" },
+  { value: "cht", label: "繁体中文" },
   { value: "en", label: "英语" },
   { value: "yue", label: "粤语" },
   { value: "wyw", label: "文言文" },
@@ -26,6 +27,5 @@ export const FANYI = [
   { value: "slo", label: "斯洛文尼亚语" },
   { value: "swe", label: "瑞典语" },
   { value: "hu", label: "匈牙利语" },
-  { value: "cht", label: "繁体中文" },
   { value: "vie", label: "越南语" },
 ];
