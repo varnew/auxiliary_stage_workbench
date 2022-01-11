@@ -1,19 +1,13 @@
 <script>
-import businessTable from "@/views/Dep/table";
 export default {
-  name: "Home",
-  components: { businessTable },
+  name: "workspace",
   data() {
-    return {
-      form: {
-        name: "",
-      },
-    };
+    return {};
   },
   mounted() {},
   methods: {},
   render() {
-    return <businessTable form={this.form}></businessTable>;
+    return <section>工作台</section>;
   },
 };
 </script>

@@ -29,7 +29,7 @@ export const routes = [
     name: "form",
     meta: {
       icon: "api",
-      name: "表单",
+      name: "表单生成器",
     },
     component: () =>
       import(/* webpackChunkName: "form" */ "../views/Form/index.vue"),
@@ -39,26 +39,26 @@ export const routes = [
     name: "debug",
     meta: {
       icon: "bug",
-      name: "测试",
+      name: "sw",
     },
     component: () =>
       import(/* webpackChunkName: "debug" */ "../views/Debug/index.vue"),
   },
   {
-    path: "/about",
-    name: "about",
+    path: "/books",
+    name: "books",
     meta: {
-      icon: "like",
-      name: "关于",
+      icon: "read",
+      name: "图书",
     },
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+      import(/* webpackChunkName: "about" */ "../views/Books.vue"),
   },
   {
     path: "/render",
     name: "render",
     meta: {
-      icon: "like",
+      icon: "number",
       name: "渲染测试",
     },
     component: () =>
