@@ -21,13 +21,13 @@ const assetsCDN = {
   },
   css: [],
   js: [
-    "//cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js",
-    "//cdn.jsdelivr.net/npm/vue-router@3.5.3/dist/vue-router.min.js",
-    "//cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js",
-    "//cdn.jsdelivr.net/npm/axios@0.24.0/dist/axios.min.js",
+    "//cdn.bootcdn.net/ajax/libs/vue@2.6.14/dist/vue.min.js",
+    "//cdn.bootcdn.net/ajax/libs/vue-router@3.5.3/dist/vue-router.min.js",
+    "//cdn.bootcdn.net/ajax/libs/vuex@3.6.2/dist/vuex.min.js",
+    "//cdn.bootcdn.net/ajax/libs/axios@0.24.0/dist/axios.min.js",
     "//cdn.bootcdn.net/ajax/libs/nprogress/0.2.0/nprogress.min.js",
     "//cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.8/clipboard.min.js",
-    "//cdn.jsdelivr.net/npm/@antv/data-set@0.11.4/build/data-set.min.js",
+    "//r5kuoefaw.hn-bkt.clouddn.com/npm/%40antv/data-set%400.11.4/build/data-set.min.jsdata-set.min.js",
     "//cdn.bootcdn.net/ajax/libs/js-cookie/latest/js.cookie.min.js",
   ],
 };
