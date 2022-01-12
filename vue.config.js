@@ -25,10 +25,10 @@ const assetsCDN = {
     "//cdn.jsdelivr.net/npm/vue-router@3.5.3/dist/vue-router.min.js",
     "//cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js",
     "//cdn.jsdelivr.net/npm/axios@0.24.0/dist/axios.min.js",
-    "//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js",
-    "//cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js",
+    "//cdn.bootcdn.net/ajax/libs/nprogress/0.2.0/nprogress.min.js",
+    "//cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.8/clipboard.min.js",
     "//cdn.jsdelivr.net/npm/@antv/data-set@0.11.4/build/data-set.min.js",
-    "//cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js",
+    "//cdn.bootcdn.net/ajax/libs/js-cookie/latest/js.cookie.min.js",
   ],
 };
 

@@ -8,13 +8,12 @@ import "codemirror/theme/base16-dark.css";
 import "codemirror/mode/vue/vue.js";
 export default {
   name: "code-editor",
-  model: {
-    prop: "code",
-    event: "input",
-  },
   components: { codemirror },
   props: {
-    code: String,
+    value: {
+      type: String,
+      default: () => "",
+    },
   },
   data() {
     return {
@@ -34,9 +33,14 @@ export default {
         this.$emit(newValue, "input");
       },
     },
+    value: {
+      handler(newValue) {
+        this.currentCode = newValue;
+      },
+    },
   },
   mounted() {
-    this.currentCode = this.code;
+    this.currentCode = this.value;
   },
   render() {
     return (
