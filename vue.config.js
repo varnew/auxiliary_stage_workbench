@@ -12,12 +12,13 @@ const assetsCDN = {
   externals: {
     vue: "Vue",
     "vue-router": "VueRouter",
+    "vue-router": "VueRouter",
     vuex: "Vuex",
     axios: "axios",
     nprogress: "NProgress",
     clipboard: "ClipboardJS",
     "@antv/data-set": "DataSet",
-    "js-cookie": "Cookies",
+    "js-cookie": "Cookies"
   },
   css: [],
   js: [
@@ -110,6 +111,12 @@ module.exports = {
     }
   },
   chainWebpack: (config) => {
+    if (process.env.npm_config_report) {
+      config
+        .plugin("webpack-bundle-analyzer")
+        .use(require("webpack-bundle-analyzer").BundleAnalyzerPlugin)
+        .end();
+    }
     config.resolve.alias
       .set("@", path.join(__dirname, "src"))
       .set("@pgs", path.join(__dirname, "packages"));

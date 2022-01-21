@@ -52,7 +52,7 @@ export const routes = [
       name: "图书",
     },
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Books.vue"),
+      import(/* webpackChunkName: "books" */ "../views/Books.vue"),
   },
   {
     path: "/render",
@@ -62,7 +62,9 @@ export const routes = [
       name: "渲染测试",
     },
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Form/renderTest.vue"),
+      import(
+        /* webpackChunkName: "renderTest" */ "../views/Form/renderTest.vue"
+      ),
   },
 ];
 

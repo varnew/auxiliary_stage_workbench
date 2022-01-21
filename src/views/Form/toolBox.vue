@@ -23,6 +23,17 @@ export default {
       ],
     };
   },
+  computed: {
+    isCol() {
+      return this.setting.config.col !== undefined;
+    },
+    isLabelCol() {
+      return this.setting.config.labelCol !== undefined;
+    },
+    isWrapperCol() {
+      return this.setting.config.wrapperCol !== undefined;
+    },
+  },
   mounted() {
     const timer = setTimeout(() => {
       this.handleModeChange("inline-horizontal");
@@ -60,6 +71,39 @@ export default {
               </a-select-option>
             ))}
           </a-select>
+          {this.isCol && (
+            <label>
+              列数：
+              <a-input
+                style="width:50px;"
+                type="number"
+                min="1"
+                vModel={this.setting.config.col}
+              />
+            </label>
+          )}
+          {this.isLabelCol && (
+            <label>
+              标签布局：
+              <a-input
+                style="width:50px;"
+                type="number"
+                min="1"
+                vModel={this.setting.config.labelCol.span}
+              />
+            </label>
+          )}
+          {this.isWrapperCol && (
+            <label>
+              控件布局：
+              <a-input
+                style="width:60px;"
+                type="number"
+                min="1"
+                vModel={this.setting.config.wrapperCol.span}
+              />
+            </label>
+          )}
         </a-space>
         <a-space>
           <a-button type="primary" size="small" on-click={this.preview}>

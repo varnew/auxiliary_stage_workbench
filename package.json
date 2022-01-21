@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve --mode development",
     "build": "vue-cli-service build --mode production",
     "lint": "vue-cli-service lint",
-    "service": "nodemon ./service/app.js"
+    "service": "nodemon ./service/app.js",
+    "analyzer": "npm_config_report=true yarn run build"
   },
   "dependencies": {
     "ant-design-vue": "^1.7.8",
@@ -47,6 +48,7 @@
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "prettier": "^2.2.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "webpack-bundle-analyzer": "^4.5.0"
   }
 }

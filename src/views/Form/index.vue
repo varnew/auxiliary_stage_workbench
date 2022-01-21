@@ -55,11 +55,7 @@ export default {
         </Scrollbar>
         <Scrollbar class="right-wrap">
           <ToolBox setting={this.setting} />
-          <RenderForm
-            ref="RenderForm"
-            setting={this.setting}
-            style="padding: 10px 0 0;"
-          />
+          <RenderForm ref="RenderForm" setting={this.setting} />
         </Scrollbar>
         <AttrSetting config={this.currentFormItem} />
       </section>
@@ -84,28 +80,22 @@ export default {
     height: 100%;
     ::v-deep {
       .container {
-        padding: 0 10px 200px;
+        padding: 0 0 200px;
       }
     }
   }
 }
 ::v-deep .custom-form {
-  &.render-form {
-    .drag-item {
-      margin: 5px;
-    }
+  margin: -1px -5px;
+  .drag-item {
+    position: relative;
+    cursor: pointer;
+    margin: 1px 5px;
   }
   &.drag-form {
     .drag-item {
-      border-radius: 8px;
-      padding: 12px;
-      position: relative;
-      cursor: pointer;
       &.drag-active {
-        background: #eff3fd !important;
-      }
-      &.chosen-item {
-        display: inline-block;
+        border: 1px dashed #1a90ff;
       }
       &:hover {
         background: #fafafb;
@@ -119,14 +109,22 @@ export default {
         padding: 2px 0;
         position: absolute;
         top: -5px;
-        right: 10px;
+        right: 0px;
         border-radius: 10px;
-        background: #fff;
+        background: #e6f7ff;
         z-index: 1;
         .icon {
           width: 36px;
         }
       }
+    }
+    .form-item-full {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      background: red;
     }
   }
   .ant-form-item {
@@ -136,5 +134,13 @@ export default {
   .inline-block {
     display: inline-block;
   }
+}
+::v-deep .ghost-item {
+  height: 100% !important;
+  background: green !important;
+  overflow: hidden;
+  font-size: 0px;
+  display: inline-block;
+  width: 2px;
 }
 </style>

@@ -172,6 +172,7 @@ export default {
         list={this.modelRender}
         group="people"
         chosen-class="chosen-item"
+        ghost-class="ghost-item"
       >
         {renderItem()}
         {this.modelRender.length === 0 && (
@@ -191,6 +192,7 @@ export default {
           "render-form": this.isRender,
           "drag-form": this.isDrag,
         }}
+        style="padding: 10px;"
         {...{ props: { ...modelProps } }}
       >
         {this.isRender ? renderItem() : renderDarg()}
