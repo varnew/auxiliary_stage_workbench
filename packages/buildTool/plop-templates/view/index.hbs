@@ -15,6 +15,11 @@ import {
 export default defineComponent({
   name: '{{ properCase name }}',
   props: {},
+  {{#if template}}
+  computed() {
+    renderForm: renderForm
+  }
+  {{/if}}
   setup() {
     const { proxy } = getCurrentInstance();
     const state = reactive({});
