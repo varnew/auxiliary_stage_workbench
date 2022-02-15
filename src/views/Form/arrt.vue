@@ -1,4 +1,5 @@
 <script>
+import _trim from "lodash/trim";
 export default {
   name: "attr-setting",
   props: {
@@ -52,6 +53,29 @@ export default {
       handler(val) {
         console.log("val", val);
       },
+    },
+  },
+  mounted() {
+    this.initKeys();
+  },
+  methods: {
+    initKeys() {
+      const formStr = sessionStorage
+        .getItem("CREATE_FORM")
+        .replace(/: ''/g, "")
+        .replace(/, \/\/ /g, "===");
+      const strList = formStr.split("\n");
+      const items = strList.splice(1, strList.length - 2).map((str) => {
+        const temp = str.split("===");
+        let label = _trim(temp[1]) || _trim(temp[0]);
+        const value = _trim(temp[0]);
+        const index = label.indexOf(" |");
+        if (index !== -1) {
+          label = label.substring(0, index);
+        }
+        return { label, value };
+      });
+      this.options.keys = items;
     },
   },
   render() {

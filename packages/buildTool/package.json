@@ -2,18 +2,18 @@
   "name": "buildtool",
   "version": "1.0.0",
   "description": "",
-  "main": "plopfile.js",
+  "main": "service.js",
+  "bin": "./service.js",
   "scripts": {
-    "new": "plop"
+    "start": "node ./service.js",
+    "asw": "node ./service.js & lt --port 8080 --host http://varnew.com:3000"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.1",
     "express": "^4.17.2",
-    "md5": "^2.3.0",
-    "nodejs-websocket": "^1.7.2",
-    "plop": "^2.7.4"
+    "nodejs-websocket": "^1.7.2"
   },
   "devDependencies": {
     "git-user-info": "^1.0.1"

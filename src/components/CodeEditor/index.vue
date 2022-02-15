@@ -36,11 +36,15 @@ export default {
     value: {
       handler(newValue) {
         this.currentCode = newValue;
+        this.key = Math.random();
       },
+      immediate: true,
     },
   },
-  mounted() {
-    this.currentCode = this.value;
+  methods: {
+    onCodeChange(editor) {
+      this.currentCode = editor.getValue();
+    },
   },
   render() {
     return (

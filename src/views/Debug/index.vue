@@ -3,9 +3,10 @@ import _get from "lodash/get";
 import _uniq from "lodash/uniq";
 import _cloneDeep from "lodash/cloneDeep";
 import Edit from "./edit";
+import ApiTable from "./apiTable";
 export default {
   name: "debug",
-  components: { Edit },
+  components: { Edit, ApiTable },
   data() {
     return {
       loading: false,
@@ -22,43 +23,6 @@ export default {
     };
   },
   computed: {
-    columns() {
-      return [
-        {
-          title: "名称",
-          dataIndex: "name",
-        },
-        {
-          title: "路径",
-          dataIndex: "path",
-        },
-        {
-          title: "分组",
-          dataIndex: "tags",
-          width: 150,
-        },
-        {
-          title: "类型",
-          dataIndex: "type",
-          width: 80,
-        },
-        {
-          title: "操作",
-          dataIndex: "action",
-          fixed: "right",
-          width: 90,
-          customRender: (text, record) => (
-            <a-button
-              type="primary"
-              size="small"
-              on-click={() => this.edit(record)}
-            >
-              编辑
-            </a-button>
-          ),
-        },
-      ];
-    },
     names() {
       return this.form.name
         ? _uniq(this.allDataSource.map((item) => item.name))
@@ -81,6 +45,7 @@ export default {
     this.getApis();
   },
   methods: {
+    // 获取sw数据
     async getApis() {
       this.loading = true;
       let res;
@@ -100,6 +65,7 @@ export default {
           const api = fns[type];
           let params;
           const parameters = api.parameters;
+          const resKey = _get(api, "responses[200].schema.originalRef");
           if (!parameters || parameters.length === 0) {
             params = null;
           } else if (
@@ -127,12 +93,22 @@ export default {
             params.forEach((item) => {
               item.formItemId = "0000";
             });
+          // 处理返回数据
+          const resParams = _get(definitions, `${resKey}.properties`, {});
+          const responses = Object.keys(resParams).map((key) => {
+            return {
+              name: key,
+              text: resParams[key].description,
+              type: resParams[key].type,
+            };
+          });
           const temp = {
             tags: api.tags,
             name: api.summary,
             type,
             params: params,
             path: pathName,
+            responses,
           };
           list.push(temp);
         });
@@ -148,11 +124,11 @@ export default {
       );
     },
     edit(record) {
+      console.log("record", record);
       this.current = record;
       this.visible = true;
     },
     search() {
-      this.wanyi();
       const { name = "", path = "", tags = "" } = this.form;
       let filterList = this.allDataSource
         .filter((item) => {
@@ -168,17 +144,6 @@ export default {
         .filter((item) => item.name.indexOf(name) !== -1)
         .filter((item) => item.path.indexOf(path) !== -1);
       this.dataSource = filterList;
-    },
-    async wanyi() {
-      const res = await this.$api.serviceRequest({
-        api: "https://v2.alapi.cn/api/comment",
-        content: {
-          id: 1400256289,
-          token: "UAeGrSjsrhL0vIJV",
-        },
-        type: "POST",
-      });
-      console.log("res", res);
     },
   },
   render() {
@@ -219,12 +184,12 @@ export default {
             </a-form-model-item>
           </a-form-model>
         </div>
-        <a-table
-          columns={this.columns}
-          data-source={this.dataSource}
+        <api-table
+          dataSource={this.dataSource}
           style="margin: 0px 10px;"
           scroll={{ y: "calc(100vh - 174px)" }}
           pagination={{ pageSize: 50, size: "small" }}
+          on-edit={(record) => this.edit(record)}
         />
         {this.visible && (
           <edit data={this.current} on-cancel={() => (this.visible = false)} />

@@ -12,13 +12,12 @@ const assetsCDN = {
   externals: {
     vue: "Vue",
     "vue-router": "VueRouter",
-    "vue-router": "VueRouter",
     vuex: "Vuex",
     axios: "axios",
     nprogress: "NProgress",
     clipboard: "ClipboardJS",
     "@antv/data-set": "DataSet",
-    "js-cookie": "Cookies"
+    "js-cookie": "Cookies",
   },
   css: [],
   js: [

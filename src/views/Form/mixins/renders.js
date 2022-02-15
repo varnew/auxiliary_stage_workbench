@@ -424,7 +424,7 @@ export default {
               render: function () {
                 return (
                   <a-input-group compact>
-                    <a-select vModel={this.value}>
+                    <a-select style="width: 50%;" vModel={this.value}>
                       1
                       {[].map((option) => (
                         <a-select-option value={option.value}>
@@ -432,7 +432,7 @@ export default {
                         </a-select-option>
                       ))}
                     </a-select>
-                    <a-input style="width: 50%" vModel={this.value2} />
+                    <a-input style="width: 50%;" vModel={this.value2} />
                   </a-input-group>
                 );
               },

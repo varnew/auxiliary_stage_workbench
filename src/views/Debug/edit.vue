@@ -3,64 +3,27 @@ import { js_beautify } from "js-beautify";
 import { MODEL_FORM_ITMES } from "./constant";
 import CodeEditor from "@/components/CodeEditor";
 import TempSelect from "./tempSelect";
+import ParamsTable from "./paramsTable";
+import ResTable from "./resTable";
+import { buildTable } from "./utils";
 export default {
   name: "edit",
   props: {
     data: Object,
   },
-  components: { CodeEditor, TempSelect },
+  components: { CodeEditor, TempSelect, ParamsTable, ResTable },
   data() {
     return {
-      renderTypeOptions: [],
       code: "",
       showCode: false,
       visible: false,
       copyType: "formObj",
+      res: {
+        isAction: true,
+      },
     };
   },
   computed: {
-    columns() {
-      return [
-        {
-          title: "名称",
-          dataIndex: "name",
-        },
-        {
-          title: "文本",
-          customRender: (text, record) => (
-            <a-input size="small" vModel={record.description} />
-          ),
-        },
-        {
-          title: "是否必填",
-          dataIndex: "require",
-          width: 80,
-          customRender: (text, record) => (
-            <a-switch size="small" vModel={record.require} />
-          ),
-        },
-        {
-          title: "类型",
-          dataIndex: "type",
-          width: 100,
-        },
-        {
-          title: "表单模版",
-          dataIndex: "action",
-          fixed: "right",
-          width: 120,
-          customRender: (text, record) => (
-            <a-select style="width: 100px" vModel={record.formItemId}>
-              {this.renderTypeOptions.map((item) => (
-                <a-select-option value={item.value}>
-                  {item.label}
-                </a-select-option>
-              ))}
-            </a-select>
-          ),
-        },
-      ];
-    },
     formObj() {
       const start = "{";
       const end = "}";
@@ -96,11 +59,6 @@ export default {
       return text;
     },
   },
-  mounted() {
-    this.renderTypeOptions = Object.keys(MODEL_FORM_ITMES).map((key) => {
-      return { label: key, value: key };
-    });
-  },
   methods: {
     copy(key) {
       this.key = key;
@@ -112,14 +70,33 @@ export default {
       this.code = this[this.copyType];
       this.showCode = !this.showCode;
     },
-    handleCopyType(type) {
-      this.code = this[type];
+    handleCopyType() {
+      this.code = this[this.copyType];
+    },
+    handleCreate() {
+      sessionStorage.setItem("CREATE_FORM", this.formObj);
+      this.$router.push({ name: "form" });
     },
     async exec() {
       const res = await this.$api.exec({ name: "exec", content: "ls" });
       console.log("----------");
       console.log("res", res);
       console.log("----------");
+    },
+    // 导出表格
+    exportTable() {
+      this.code = buildTable(this.data.responses);
+      this.showCode = !this.showCode;
+    },
+    // 表头i18n
+    titleI18n() {
+      const text = this.data.responses
+        .filter((item) => item.text)
+        .map((item) => item.text)
+        .join("\n");
+      this.$copyText(text).then(() => {
+        this.$message.success("复制成功");
+      });
     },
   },
   render() {
@@ -129,6 +106,7 @@ export default {
       path = "",
       tags = "",
       params: dataSource = [],
+      responses: resSource = [],
     } = this.data || {};
     return (
       <article class="edit-wrap">
@@ -165,6 +143,10 @@ export default {
             表单配对
           </a-button>
           <a-divider type="vertical" />
+          <a-button size="small" type="primary" on-click={this.handleCreate}>
+            创建表单
+          </a-button>
+          <a-divider type="vertical" />
           <a-button size="small" on-click={() => this.$emit("cancel")}>
             返回
           </a-button>
@@ -182,11 +164,33 @@ export default {
           </div>
         )}
         {!this.showCode && (
-          <a-table
-            columns={this.columns}
+          <ParamsTable
             data-source={dataSource}
             scroll={{ y: "calc(100vh - 180px)" }}
             pagination={false}
+            scroll={{ y: "calc(40vh)" }}
+          />
+        )}
+        <div style="margin: 10px 0;">
+          <a-space>
+            <h4 style="display:inline;">返回数据</h4>
+            <a-switch size="small" vModel={this.res.isAction}>
+              显示操作
+            </a-switch>
+            <a-button size="small" type="primary" on-click={this.exportTable}>
+              导出表格
+            </a-button>
+            <a-button size="small" type="primary" on-click={this.titleI18n}>
+              表头i18n
+            </a-button>
+          </a-space>
+        </div>
+        {!this.showCode && (
+          <ResTable
+            data-source={resSource}
+            scroll={{ y: "calc(40vh)" }}
+            pagination={false}
+            selectedType="checkbox"
           />
         )}
         <TempSelect
@@ -201,7 +205,6 @@ export default {
 </script>
 <style lang="less" scoped>
 .edit-wrap {
-  min-height: 100%;
   padding: 10px;
   position: absolute;
   top: 0px;

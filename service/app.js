@@ -4,21 +4,9 @@ const bodyParser = require("body-parser");
 const { exec } = require("child_process");
 const path = require("path");
 const fs = require("fs");
-// const https = require("https");
 const md5 = require("md5");
 
 const app = express();
-
-// configuare https
-// const httpsOption = {
-//   key: fs.readFileSync(
-//     path.join(__dirname, "../public/varnew_com/private.key")
-//   ),
-//   cert: fs.readFileSync(
-//     path.join(__dirname, "../public/varnew_com/full_chain.pem")
-//   ),
-// };
-// https.createServer(httpsOption, app);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

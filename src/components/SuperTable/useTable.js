@@ -1,6 +1,6 @@
 export default {
   props: {
-    pagination: Object,
+    pagination: [Object, Boolean],
     selectedType: String, // checkbox | radio
   },
   data() {
@@ -26,6 +26,9 @@ export default {
     },
     // 初始化pagination
     initPagination() {
+      if (typeof this.pagination === "boolean") {
+        return (this.renderPagination = this.pagination);
+      }
       const PAGINATION = {
         current: 1,
         hideOnSinglePage: false,
@@ -34,7 +37,7 @@ export default {
         pageSizeOptions: ["10", "20", "30", "40"],
         showQuickJumper: true,
         showTotal: (total, range) => {
-          return `（${range[0]}-${range[1]}）,共${total}条数据`;
+          return `【${range[0]}-${range[1]}】,共${total}条数据`;
         },
         size: "small",
         total: 0,
@@ -86,7 +89,7 @@ export default {
       const { current, pageSize } = pagination
         ? pagination
         : this.renderPagination;
-      this.loadData({ current, pageSize });
+      this.loadData && this.loadData({ current, pageSize });
     },
   },
 };

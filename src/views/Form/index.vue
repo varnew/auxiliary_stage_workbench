@@ -23,6 +23,7 @@ export default {
         config: {},
       },
       currentFormItem: null,
+      swUrl: "",
     };
   },
   mounted() {
@@ -43,13 +44,45 @@ export default {
       const ref = this.$refs.RenderForm;
       if (ref) {
         const form = ref.modelRender;
-        downloadComponents(this.setting.config, form, payload);
+        const content = downloadComponents(this.setting.config, form, payload);
+        this.websocket.send(
+          JSON.stringify({
+            content,
+            type: "view",
+            name: "test",
+            path: "./name.vue",
+            isCover: true,
+          })
+        );
       }
     });
+  },
+  methods: {
+    link() {
+      this.websocket = new WebSocket(this.swUrl); // "ws://localhost:1996"
+      this.websocket.onopen = (...args) => {
+        console.log("open", args);
+      };
+      // this.websocket.onmessage = (ev) => {
+      //   let res = JSON.parse(ev.data);
+      //   console.log("res", res);
+      // };
+      this.websocket.onerror = (...args) => {
+        console.log("onerror", args);
+      };
+    },
   },
   render() {
     return (
       <section class="drag-page">
+        <a-space class="websoket">
+          websoket
+          <a-input class="sw-url" size="small" vModel={this.swUrl}></a-input>
+          <a-button size="small" type="primary" on-click={this.link}>
+            连接
+          </a-button>
+        </a-space>
+
         <Scrollbar class="left-wrap">
           <MenuList setting={this.setting} />
         </Scrollbar>
@@ -70,6 +103,14 @@ export default {
   height: 100%;
   display: flex;
   border-radius: 4px;
+  .websoket {
+    position: absolute;
+    top: 12px;
+    right: 10px;
+    .sw-url {
+      width: 220px;
+    }
+  }
   .left-wrap {
     height: 100%;
     width: 220px;
