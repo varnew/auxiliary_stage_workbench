@@ -8,7 +8,7 @@ export default {
           list: [
             {
               dragName: " 文本框",
-              id: "0000",
+              id: "输入框",
               label: "文本框",
               prop: "",
               attrs: {
@@ -30,7 +30,7 @@ export default {
             },
             {
               dragName: "数字框",
-              id: "0001",
+              id: "数字框",
               label: "数字框",
               prop: "",
               attrs: {
@@ -52,7 +52,7 @@ export default {
             },
             {
               dragName: "选择框",
-              id: "0002",
+              id: "下拉框",
               label: "选择框",
               prop: "",
               attrs: {
@@ -88,7 +88,7 @@ export default {
             },
             {
               dragName: " 日期",
-              id: "0003",
+              id: "日期选择器",
               label: "日期",
               prop: "name",
               attrs: {
@@ -110,7 +110,7 @@ export default {
             },
             {
               dragName: "时间",
-              id: "0004",
+              id: "时间选择器",
               label: "时间",
               prop: "name",
               attrs: {
@@ -135,7 +135,7 @@ export default {
             },
             {
               dragName: "开关",
-              id: "0005",
+              id: "开关",
               label: "开关",
               prop: "switch",
               attrs: {
@@ -157,7 +157,7 @@ export default {
             },
             {
               dragName: "多选框",
-              id: "0006",
+              id: "多选框",
               label: "多选框",
               prop: "switch",
               attrs: {
@@ -189,7 +189,7 @@ export default {
             },
             {
               dragName: "单选框",
-              id: "0007",
+              id: "单选框",
               label: "单选框",
               prop: "radio",
               attrs: {
@@ -219,7 +219,7 @@ export default {
             },
             {
               dragName: "多行文本",
-              id: "0008",
+              id: "多行文本框",
               label: "多行文本",
               prop: "textarea",
               attrs: {
@@ -241,7 +241,7 @@ export default {
             },
             {
               dragName: "上传",
-              id: "0009",
+              id: "文件上传",
               label: "上传",
               prop: "file",
               template: `<a-upload
@@ -279,7 +279,7 @@ export default {
           list: [
             {
               dragName: "按钮",
-              id: "0100",
+              id: "primary按钮",
               label: "",
               attrs: {
                 text: {
@@ -326,7 +326,7 @@ export default {
           list: [
             {
               dragName: "输入-icon",
-              id: "0200",
+              id: "输入-icon",
               label: "",
               prop: "",
               attrs: {
@@ -357,7 +357,7 @@ export default {
             },
             {
               dragName: "输入-输入",
-              id: "0201",
+              id: "输入-输入",
               label: "",
               prop: "",
               attrs: {
@@ -393,7 +393,7 @@ export default {
             },
             {
               dragName: "选择-输入",
-              id: "0202",
+              id: "选择-输入",
               label: "",
               prop: "",
               attrs: {
@@ -439,7 +439,7 @@ export default {
             },
             {
               dragName: "日期-日期",
-              id: "0203",
+              id: "日期-日期",
               label: "",
               prop: "",
               attrs: {

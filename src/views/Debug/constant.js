@@ -49,13 +49,13 @@ export const MODE_MAP = {
   },
 };
 export const MODEL_FORM_ITMES = {
-  "0000": (formItem) => `  {
+  输入框: (formItem) => `  {
     render: () => <a-input vModel={this.form.${formItem.name}} />
   }`,
-  "0001": (formItem) => `  {
+  数字框: (formItem) => `  {
     render: () => <a-input-number vModel={this.form.${formItem.name}} />
   }`,
-  "0002": (formItem) => `  {
+  下拉框: (formItem) => `  {
     render: () => <a-select vModel={this.form.${formItem.name}}>
       {[].map((option) => (
         <a-select-option value={option.value}>
@@ -64,53 +64,53 @@ export const MODEL_FORM_ITMES = {
       ))}
     </a-select>
   }`,
-  "0003": (formItem) =>
+  日期选择器: (formItem) =>
     `  {
     render: () => <a-date-picker type="date" vModel={this.form.${formItem.name}} />
   }`,
-  "0004": (formItem) =>
+  时间选择器: (formItem) =>
     `  {
     render: () => <a-time-picker format="hh:mm:ss" vModel={this.form.${formItem.name}} />
   }`,
-  "0005": (formItem) =>
+  开关: (formItem) =>
     `  {
     render: () => <a-switch vModel={this.form.${formItem.name}} />
   }`,
-  "0006": (formItem) =>
+  多选框: (formItem) =>
     `  {
     render: () => <a-checkbox-group name="checkboxgroup" options={[{ label: "123", value: "123" }]} vModel={this.form.${formItem.name}} />
   }`,
-  "0007": (formItem) =>
+  单选框: (formItem) =>
     `  {
     render: () => <a-radio-group options={[{ label: "123", value: "123" }]} vModel={this.form.${formItem.name}} />
   }`,
-  "0008": (formItem) =>
+  多行文本框: (formItem) =>
     `  {
     render: () => <a-input type="textarea" vModel={this.form.${formItem.name}} />
   }`,
-  "0009": () =>
+  文件上传: () =>
     `  {
     render: () => <a-upload name="file" multiple={true} action="https://www.mocky.io/v2/5cc8019d300000980a055e76" headers={{}} on-change={() => {}}><a-button><a-icon type="upload" />上传</a-button></a-upload>
   }`,
-  "0100": () => `<a-button type="primary">按钮</a-button>`,
-  "0101": () => `<a-button>按钮</a-button>`,
+  primary按钮: () => `<a-button type="primary">按钮</a-button>`,
+  按钮: () => `<a-button>按钮</a-button>`,
   "0102": () => `<a-button type="danger">按钮</a-button>`,
   "0103": () => `<a-button type="link" href="javascript:none">按钮</a-button>`,
   "0104": () => `<a-button type="primary" icon="search">按钮</a-button>`,
   "0105": () => `<a-button type="dashed" loading={true}>按钮</a-button>`,
-  "0200": (formItem) =>
+  "输入-icon": (formItem) =>
     `  {
     render: () => <a-input type="textarea" vModel={this.form.${formItem.name}}><a-icon slot="addonAfter" type="setting" style='cursor: pointer;'/></a-input>
   }`,
-  "0201": (formItem) =>
+  "输入-输入": (formItem) =>
     `  {
     render: () => <a-input-group compact><a-input style='width: 30%' vModel={this.form.${formItem.name}}/><a-input style='width: 70%' vModel={this.form.${formItem.name}} /></a-input-group>
   }`,
-  "0202": (formItem) =>
+  "选择-输入": (formItem) =>
     `  {
     render: () => <a-input-group compact><a-select vModel={this.form.${formItem.name}}>{[].map((option) => (<a-select-option value={option.value}>{option.name}</a-select-option>))}</a-select><a-input style='width: 50%' vModel={this.form.${formItem.name}}/></a-input-group>
   }`,
-  "0203": (formItem) =>
+  "日期-日期": (formItem) =>
     `  {
     render: () => <a-input-group compact><a-date-picker vModel={this.form.${formItem.name}} /><a-date-picker vModel={this.form.${formItem.name}} /></a-input-group>
   }`,

@@ -56,6 +56,13 @@ module.exports = {
         //   "^/api": "",
         // },
       },
+      "/api": {
+        target: "https://tcc-test.interlib.com.cn",
+        changeOrigin: true,
+        // pathRewrite: {
+        //   "^/api": "",
+        // },
+      },
       "/service": {
         target: "http://localhost:3001",
         changeOrigin: true,

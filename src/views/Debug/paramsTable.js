@@ -4,7 +4,7 @@
 import renderTable from "@/components/SuperTable/renderTable";
 import { MODEL_FORM_ITMES } from "./constant";
 export default {
-  name: "business-table",
+  name: "ParamsTable",
   mixins: [renderTable],
   props: {
     dataSource: Array,
@@ -18,7 +18,7 @@ export default {
     columns() {
       return [
         {
-          title: "名称",
+          title: "key名称",
           dataIndex: "name",
         },
         {
@@ -44,9 +44,9 @@ export default {
           title: "表单模版",
           dataIndex: "action",
           fixed: "right",
-          width: 120,
+          width: 180,
           customRender: (text, record) => (
-            <a-select style="width: 100px" vModel={record.formItemId}>
+            <a-select style="width: 170px" vModel={record.formItemId}>
               {this.renderTypeOptions.map((item) => (
                 <a-select-option value={item.value}>
                   {item.label}

@@ -91,7 +91,7 @@ export default {
           }
           params &&
             params.forEach((item) => {
-              item.formItemId = "0000";
+              item.formItemId = "输入框";
             });
           // 处理返回数据
           const resParams = _get(definitions, `${resKey}.properties`, {});
@@ -188,7 +188,7 @@ export default {
           dataSource={this.dataSource}
           style="margin: 0px 10px;"
           scroll={{ y: "calc(100vh - 174px)" }}
-          pagination={{ pageSize: 50, size: "small" }}
+          pagination={{ size: "small" }}
           on-edit={(record) => this.edit(record)}
         />
         {this.visible && (

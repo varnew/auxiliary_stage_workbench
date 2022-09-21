@@ -33,8 +33,8 @@ export default {
         current: 1,
         hideOnSinglePage: false,
         showSizeChanger: true,
-        pageSize: 10,
-        pageSizeOptions: ["10", "20", "30", "40"],
+        pageSize: 30,
+        pageSizeOptions: ["30", "50", "100", "200"],
         showQuickJumper: true,
         showTotal: (total, range) => {
           return `【${range[0]}-${range[1]}】,共${total}条数据`;
