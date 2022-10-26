@@ -59,6 +59,7 @@ export default {
     this.initKeys();
   },
   methods: {
+    // 初始化表单key
     initKeys() {
       const formStr = sessionStorage
         .getItem("CREATE_FORM")
@@ -87,6 +88,17 @@ export default {
         return (
           <a-select vModel={item.value}>
             {this.options[item.optionKey || "keys"].map((option) => (
+              <a-select-option value={option.value}>
+                {option.label}
+              </a-select-option>
+            ))}
+          </a-select>
+        );
+      }
+      if (item.renderType === "multiple_select") {
+        return (
+          <a-select vModel={item.value} mode="multiple">
+            {item.options.map((option) => (
               <a-select-option value={option.value}>
                 {option.label}
               </a-select-option>

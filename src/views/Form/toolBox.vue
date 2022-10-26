@@ -34,12 +34,7 @@ export default {
       return this.setting.config.wrapperCol !== undefined;
     },
   },
-  mounted() {
-    const timer = setTimeout(() => {
-      this.handleModeChange("inline-horizontal");
-      clearTimeout(timer);
-    });
-  },
+  mounted() {},
   methods: {
     // 预览
     preview() {
@@ -110,7 +105,7 @@ export default {
             {this.setting.renderType === "PREVIEW" ? "预览" : "编辑"}
           </a-button>
           <a-button type="primary" size="small" on-click={this.export}>
-            输出
+            代码预览
           </a-button>
         </a-space>
       </div>

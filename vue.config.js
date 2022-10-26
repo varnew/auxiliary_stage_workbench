@@ -79,6 +79,7 @@ module.exports = {
     },
   },
   configureWebpack: (config) => {
+    config.devtool = "source-map";
     config.entry.app = ["babel-polyfill", "./src/main.js"];
     config.performance = {
       hints: false,

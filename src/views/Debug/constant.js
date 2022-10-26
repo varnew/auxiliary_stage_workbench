@@ -92,12 +92,9 @@ export const MODEL_FORM_ITMES = {
     `  {
     render: () => <a-upload name="file" multiple={true} action="https://www.mocky.io/v2/5cc8019d300000980a055e76" headers={{}} on-change={() => {}}><a-button><a-icon type="upload" />上传</a-button></a-upload>
   }`,
-  primary按钮: () => `<a-button type="primary">按钮</a-button>`,
-  按钮: () => `<a-button>按钮</a-button>`,
-  "0102": () => `<a-button type="danger">按钮</a-button>`,
-  "0103": () => `<a-button type="link" href="javascript:none">按钮</a-button>`,
-  "0104": () => `<a-button type="primary" icon="search">按钮</a-button>`,
-  "0105": () => `<a-button type="dashed" loading={true}>按钮</a-button>`,
+  按钮: () => `  {
+    render: () => <a-button>按钮</a-button>
+  }`,
   "输入-icon": (formItem) =>
     `  {
     render: () => <a-input type="textarea" vModel={this.form.${formItem.name}}><a-icon slot="addonAfter" type="setting" style='cursor: pointer;'/></a-input>

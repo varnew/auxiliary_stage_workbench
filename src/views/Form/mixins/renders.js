@@ -1,4 +1,32 @@
 import _get from "lodash/get";
+import _cloneDeep from "lodash/cloneDeep";
+const DEFAULT_ATTRS = {
+  label: {
+    label: "表单名称",
+    value: "",
+    renderType: "input",
+  },
+  key: {
+    label: "关联key",
+    value: "",
+    renderType: "select",
+  },
+  rules: {
+    label: "校验规则",
+    value: [],
+    options: [
+      {
+        label: "空检验",
+        value: `{ required: true, message: '请输入<%=item.attrs.label.value || ''%>' }`,
+      },
+      {
+        label: "正则",
+        value: `{ pattern: /^[\\S]*$/, message: '请输入有效内容' }`,
+      },
+    ],
+    renderType: "multiple_select",
+  },
+};
 export default {
   data() {
     return {
@@ -11,18 +39,7 @@ export default {
               id: "输入框",
               label: "文本框",
               prop: "",
-              attrs: {
-                label: {
-                  label: "表单名称",
-                  value: "",
-                  renderType: "input",
-                },
-                key: {
-                  label: "关联key",
-                  value: "",
-                  renderType: "select",
-                },
-              },
+              attrs: { ..._cloneDeep(DEFAULT_ATTRS) },
               template: `<a-input vModel={this.form.<%=item.attrs.key.value || 'test'%>} />`,
               render: function () {
                 return <a-input vModel={this.value} />;
@@ -33,42 +50,22 @@ export default {
               id: "数字框",
               label: "数字框",
               prop: "",
-              attrs: {
-                label: {
-                  label: "表单名称",
-                  value: "",
-                  renderType: "input",
-                },
-                key: {
-                  label: "关联key",
-                  value: "",
-                  renderType: "select",
-                },
-              },
+              attrs: { ..._cloneDeep(DEFAULT_ATTRS) },
               template: `<a-input-number vModel={this.form.<%=item.attrs.key.value || 'test'%>} />`,
               render: function () {
                 return <a-input type="number" vModel={this.value} />;
               },
             },
             {
-              dragName: "选择框",
+              dragName: "下拉框",
               id: "下拉框",
-              label: "选择框",
+              label: "下拉框",
               prop: "",
               attrs: {
-                label: {
-                  label: "表单名称",
-                  value: "",
-                  renderType: "input",
-                },
-                key: {
-                  label: "关联key",
-                  value: "",
-                  renderType: "select",
-                },
+                ..._cloneDeep(DEFAULT_ATTRS),
               },
               template: `<a-select vModel={this.form.<%=item.attrs.key.value || 'test'%>}>
-                {[].map((option) => (
+                {this.options.<%=item.attrs.key.value || 'test'%>.map((option) => (
                   <a-select-option value={option.value}>
                     {option.name}
                   </a-select-option>
@@ -91,21 +88,16 @@ export default {
               id: "日期选择器",
               label: "日期",
               prop: "name",
-              attrs: {
-                label: {
-                  label: "表单名称",
-                  value: "",
-                  renderType: "input",
-                },
-                key: {
-                  label: "关联key",
-                  value: "",
-                  renderType: "select",
-                },
-              },
+              attrs: { ..._cloneDeep(DEFAULT_ATTRS) },
               template: `<a-date-picker vModel={this.form.<%=item.attrs.key.value || 'test'%>} type="date" />`,
               render: function () {
-                return <a-date-picker vModel={this.value} type="date" />;
+                return (
+                  <a-date-picker
+                    vModel={this.value}
+                    type="date"
+                    format="YYYY-MM-DD"
+                  />
+                );
               },
             },
             {
@@ -113,18 +105,7 @@ export default {
               id: "时间选择器",
               label: "时间",
               prop: "name",
-              attrs: {
-                label: {
-                  label: "表单名称",
-                  value: "",
-                  renderType: "input",
-                },
-                key: {
-                  label: "关联key",
-                  value: "",
-                  renderType: "select",
-                },
-              },
+              attrs: { ..._cloneDeep(DEFAULT_ATTRS) },
               template: `<a-time-picker
                 format="hh:mm:ss"
                 vModel={this.form.<%=item.attrs.key.value || 'test'%>}
@@ -138,18 +119,7 @@ export default {
               id: "开关",
               label: "开关",
               prop: "switch",
-              attrs: {
-                label: {
-                  label: "表单名称",
-                  value: "",
-                  renderType: "input",
-                },
-                key: {
-                  label: "关联key",
-                  value: "",
-                  renderType: "select",
-                },
-              },
+              attrs: { ..._cloneDeep(DEFAULT_ATTRS) },
               template: `<a-switch vModel={this.form.<%=item.attrs.key.value || 'test'%>} />`,
               render: function () {
                 return <a-switch vModel={this.value} />;
@@ -160,18 +130,7 @@ export default {
               id: "多选框",
               label: "多选框",
               prop: "switch",
-              attrs: {
-                label: {
-                  label: "表单名称",
-                  value: "",
-                  renderType: "input",
-                },
-                key: {
-                  label: "关联key",
-                  value: "",
-                  renderType: "select",
-                },
-              },
+              attrs: { ..._cloneDeep(DEFAULT_ATTRS) },
               template: `<a-checkbox-group
                 vModel={this.form.<%=item.attrs.key.value || 'test'%>}
                 name="checkboxgroup"
@@ -192,18 +151,7 @@ export default {
               id: "单选框",
               label: "单选框",
               prop: "radio",
-              attrs: {
-                label: {
-                  label: "表单名称",
-                  value: "",
-                  renderType: "input",
-                },
-                key: {
-                  label: "关联key",
-                  value: "",
-                  renderType: "select",
-                },
-              },
+              attrs: { ..._cloneDeep(DEFAULT_ATTRS) },
               template: `<a-radio-group
                 vModel={this.form.<%=item.attrs.key.value || 'test'%>}
                 options={[{ label: "123", value: "123" }]}
@@ -222,18 +170,7 @@ export default {
               id: "多行文本框",
               label: "多行文本",
               prop: "textarea",
-              attrs: {
-                label: {
-                  label: "表单名称",
-                  value: "",
-                  renderType: "input",
-                },
-                key: {
-                  label: "关联key",
-                  value: "",
-                  renderType: "select",
-                },
-              },
+              attrs: { ..._cloneDeep(DEFAULT_ATTRS) },
               template: `<a-input vModel={this.form.<%=item.attrs.key.value || 'test'%>} type="textarea" />`,
               render: function () {
                 return <a-input vModel={this.value} type="textarea" />;
@@ -279,7 +216,7 @@ export default {
           list: [
             {
               dragName: "按钮",
-              id: "primary按钮",
+              id: "按钮",
               label: "",
               attrs: {
                 text: {

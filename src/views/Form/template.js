@@ -1,37 +1,16 @@
-// import { js_beautify } from "js-beautify";
 import _cloneDeep from "lodash/cloneDeep";
-import ejs from "ejs";
-// import _get from "lodash/get";
-// const pretty = require("js-object-pretty-print").pretty;
+import prettier from "prettier/standalone";
+import parserBabel from "prettier/parser-babel";
+import {
+  getModelRender,
+  buildRules,
+  buildFormObj,
+  buildFormOption,
+} from "./utils";
 
-// 获取表单项配置
-const getModelRender = (list = []) => {
-  const tempList = list.map((item) => {
-    return `{
-      label: "${item.label}",
-      render: () => ${ejs.render(item.template, { item: item })}
-    }`;
-  });
-  let text = `modelRender() {
-    return [
-      ${tempList.join(",")}
-    ]
-  }`;
-  return text;
-};
-
-// 获取表单布局配置信息
-const getLayoutConfig = (layoutConfig) => {
-  let textList = [];
-  Object.keys(layoutConfig).forEach((key) => {
-    const value =
-      typeof layoutConfig[key] === "string"
-        ? `"${layoutConfig[key]}"`
-        : JSON.stringify(layoutConfig[key]);
-    textList.push(`${key}: ${value}`);
-  });
-  return textList.join(",");
-};
+/**
+ * @desc: 输出模版
+ */
 
 export const FORM_COMPONENT = (layoutConfig, formItems = []) => {
   const exportItems = formItems.map((item) => {
@@ -44,32 +23,34 @@ export const FORM_COMPONENT = (layoutConfig, formItems = []) => {
     },`;
   };
   let temp = `
-<script>
-import useForm from "@pgs/portableForm";
-import "@pgs/portableForm/index.less";
+import useForm from '@/views/cloudLibrary/common/hooks/useForm'
 export default {
   name: 'render-form',
   components: {},
   mixins: [useForm],
   data: () => {
     return {
-      form: {},
-      rules: {
-        input: [
-          { required: true, message: '请输入', trigger: 'blur' }
-        ]
+      labelCol: { span: 6 },
+      wrapperCol: { span: 18 },
+      options: {
+        ${buildFormOption(exportItems)}
       },
-      ${getLayoutConfig(layoutConfig)}
+      form: {
+        ${buildFormObj(exportItems)}
+      },
+      rules: {
+        ${buildRules(exportItems)}
+      }
     };
   },
   ${buildComputed(exportItems)}
   mounted() {},
   methods: {
-    onSubmit() {
+    onSubmit(callback) {
       const ref = this.ref || 'form'
       this.$refs[ref].validate(valid => {
         if (valid) {
-          //
+          callback && callback()
         } else {
           return false;
         }
@@ -81,29 +62,10 @@ export default {
     }
   }
 };
-</script>
-
-<style lang="less" scoped>
-</style>
 `;
-  // return js_beautify(temp, {
-  //   indent_size: 2,
-  //   html: {
-  //     end_with_newline: true,
-  //     extra_liners: [],
-  //     js: {
-  //       indent_size: 2,
-  //     },
-  //     css: {
-  //       indent_size: 2,
-  //     },
-  //   },
-  //   css: {
-  //     indent_size: 1,
-  //   },
-  //   js: {
-  //     "preserve-newlines": true,
-  //   },
-  // });
-  return temp;
+  const code = prettier.format(temp, {
+    parser: "babel",
+    plugins: [parserBabel],
+  });
+  return "<script>" + "\n" + code + "</script>";
 };

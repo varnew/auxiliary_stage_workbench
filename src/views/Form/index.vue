@@ -1,4 +1,5 @@
 <script>
+import CodeEditor from "@/components/CodeEditor";
 import RenderForm from "./renderForm";
 import MenuList from "./menuList.vue";
 import ToolBox from "./toolBox.vue";
@@ -9,6 +10,7 @@ import { downloadComponents } from "./downTemp";
 export default {
   name: "drag-form",
   components: {
+    CodeEditor,
     RenderForm,
     MenuList,
     ToolBox,
@@ -18,15 +20,26 @@ export default {
   data() {
     return {
       setting: {
-        mode: "inline-horizontal",
+        mode: "block-horizontal",
         renderType: "PREVIEW", // PREVIEW | EDIT
-        config: {},
+        config: {
+          layout: "horizontal",
+          labelCol: { span: 6 },
+          wrapperCol: { span: 18 },
+          colon: false,
+          mode: "block-horizontal",
+        },
       },
       currentFormItem: null,
       swUrl: "",
+      code: "",
+      visiable: {
+        code: false,
+      },
     };
   },
   mounted() {
+    console.log("d", this.setting);
     eventBus.$on("updata:config", (payload) => {
       this.setting.config = payload;
     });
@@ -44,16 +57,17 @@ export default {
       const ref = this.$refs.RenderForm;
       if (ref) {
         const form = ref.modelRender;
-        const content = downloadComponents(this.setting.config, form, payload);
-        this.websocket.send(
-          JSON.stringify({
-            content,
-            type: "view",
-            name: "test",
-            path: "./name.vue",
-            isCover: true,
-          })
-        );
+        this.code = downloadComponents(this.setting.config, form, payload);
+        this.visiable.code = true;
+        // this.websocket.send(
+        //   JSON.stringify({
+        //     content: this.code,
+        //     type: "view",
+        //     name: "test",
+        //     path: "./name.vue",
+        //     isCover: true,
+        //   })
+        // );
       }
     });
   },
@@ -70,6 +84,12 @@ export default {
       this.websocket.onerror = (...args) => {
         console.log("onerror", args);
       };
+    },
+    // 代码复制
+    handleCopy() {
+      this.$copyText(this.code).then(() => {
+        this.$message.success("复制成功");
+      });
     },
   },
   render() {
@@ -91,6 +111,15 @@ export default {
           <RenderForm ref="RenderForm" setting={this.setting} />
         </Scrollbar>
         <AttrSetting config={this.currentFormItem} />
+        <a-modal
+          vModel={this.visiable.code}
+          title="代码预览"
+          width="80%"
+          okText="copy"
+          on-ok={this.handleCopy}
+        >
+          <CodeEditor vModel={this.code} />
+        </a-modal>
       </section>
     );
   },
